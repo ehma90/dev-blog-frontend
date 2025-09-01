@@ -26,25 +26,35 @@ export default function Register() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-md w-full space-y-8">
+    <div className="min-h-screen flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8 relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#f2e9e4] via-white to-[#e8ddd8] opacity-50"></div>
+      <div className="absolute top-20 right-20 w-32 h-32 bg-gradient-to-br from-[#22223b]/10 to-[#4a4e69]/10 rounded-full blur-xl"></div>
+      <div className="absolute bottom-20 left-20 w-40 h-40 bg-gradient-to-br from-[#4a4e69]/10 to-[#22223b]/10 rounded-full blur-xl"></div>
+
+      <div className="max-w-md w-full space-y-8 relative z-10">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
+          transition={{ duration: 0.3, ease: "easeOut" }}
           className="text-center"
         >
-          <h2 className="text-3xl font-bold text-[#22223b] mb-2">
+          <div className="w-16 h-16 bg-gradient-to-br from-[#22223b] to-[#4a4e69] rounded-2xl flex items-center justify-center mx-auto mb-6">
+            <span className="text-white text-2xl font-bold">🎉</span>
+          </div>
+          <h2 className="text-4xl font-bold text-[#22223b] mb-3">
             Join Dev Blog
           </h2>
-          <p className="text-[#4a4e69]">Create your account to start writing</p>
+          <p className="text-lg text-[#4a4e69]">
+            Create your account and start your writing journey
+          </p>
         </motion.div>
 
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="mt-8 space-y-6 bg-white p-8 rounded-lg shadow-md"
+          transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
+          className="mt-8 space-y-6 card p-10"
           onSubmit={handleSubmit}
         >
           <div className="space-y-4">
@@ -154,10 +164,11 @@ export default function Register() {
           <motion.button
             whileHover={{ scale: 1.02 }}
             whileTap={{ scale: 0.98 }}
+            transition={{ duration: 0.1 }}
             type="submit"
-            className="w-full bg-[#22223b] text-white py-2 px-4 rounded-md hover:bg-[#4a4e69] transition-colors duration-200 font-medium"
+            className="w-full btn-primary py-4 text-lg font-semibold"
           >
-            Create Account
+            🎯 Create Account
           </motion.button>
 
           <div className="text-center">

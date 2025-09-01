@@ -26,11 +26,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen`}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased min-h-screen mx-auto w-full`}
         style={{ backgroundColor: "#f2e9e4", color: "#22223b" }}
       >
         <Navigation />
-        <main className="min-h-screen">{children}</main>
+        <main className="min-h-screen flex flex-col">{children}</main>
       </body>
     </html>
   );

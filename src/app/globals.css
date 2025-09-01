@@ -5,6 +5,8 @@
   --primary-light: #f2e9e4;
   --secondary: #4a4e69;
   --white: #ffffff;
+  --accent: #9a8c98;
+  --light-accent: #c9ada7;
 }
 
 @theme inline {
@@ -12,6 +14,8 @@
   --color-primary-light: var(--primary-light);
   --color-secondary: var(--secondary);
   --color-white: var(--white);
+  --color-accent: var(--accent);
+  --color-light-accent: var(--light-accent);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
@@ -23,10 +27,41 @@
 }
 
 body {
-  background: var(--primary-light);
+  background: linear-gradient(135deg, #f2e9e4 0%, #e8ddd8 100%);
   color: var(--primary-dark);
-  font-family: var(--font-geist-sans), Arial, Helvetica, sans-serif;
-  line-height: 1.6;
+  font-family: var(--font-geist-sans), -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, sans-serif;
+  line-height: 1.7;
+  font-weight: 400;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Enhanced typography */
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-weight: 700;
+  line-height: 1.2;
+  letter-spacing: -0.025em;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 800;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 600;
 }
 
 /* Custom scrollbar */
@@ -45,4 +80,95 @@ body {
 
 ::-webkit-scrollbar-thumb:hover {
   background: var(--primary-dark);
+}
+
+/* Enhanced button styles */
+.btn-primary {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--secondary) 100%
+  );
+  color: white;
+  border: none;
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 15px rgba(34, 34, 59, 0.2);
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(34, 34, 59, 0.3);
+}
+
+.btn-secondary {
+  background: white;
+  color: var(--primary-dark);
+  border: 2px solid var(--secondary);
+  border-radius: 12px;
+  padding: 12px 24px;
+  font-weight: 600;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.btn-secondary:hover {
+  background: var(--secondary);
+  color: white;
+  transform: translateY(-2px);
+  box-shadow: 0 8px 25px rgba(74, 78, 105, 0.2);
+}
+
+/* Enhanced card styles */
+.card {
+  background: white;
+  border-radius: 20px;
+  box-shadow: 0 10px 40px rgba(34, 34, 59, 0.1);
+  transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 20px 60px rgba(34, 34, 59, 0.15);
+}
+
+/* Enhanced form styles */
+.form-input {
+  background: white;
+  border: 2px solid #e5e7eb;
+  border-radius: 12px;
+  padding: 16px 20px;
+  font-size: 16px;
+  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.form-input:focus {
+  outline: none;
+  border-color: var(--secondary);
+  box-shadow: 0 0 0 4px rgba(74, 78, 105, 0.1);
+  transform: translateY(-1px);
+}
+
+/* Gradient backgrounds */
+.gradient-bg {
+  background: linear-gradient(
+    135deg,
+    var(--primary-light) 0%,
+    #e8ddd8 50%,
+    #ddd4d0 100%
+  );
+}
+
+.gradient-text {
+  background: linear-gradient(
+    135deg,
+    var(--accent) 0%,
+    var(--secondary) 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

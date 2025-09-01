@@ -31,20 +31,26 @@ export default function CreatePost() {
   };
 
   return (
-    <div className="min-h-screen py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen py-12 relative">
+      {/* Background decoration */}
+      <div className="absolute inset-0 bg-gradient-to-br from-[#f2e9e4] via-white to-[#e8ddd8] opacity-30"></div>
+      <div className="absolute top-20 left-20 w-40 h-40 bg-gradient-to-br from-[#22223b]/5 to-[#4a4e69]/5 rounded-full blur-3xl"></div>
+      <div className="absolute bottom-20 right-20 w-60 h-60 bg-gradient-to-br from-[#4a4e69]/5 to-[#22223b]/5 rounded-full blur-3xl"></div>
+
+      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         {/* Header */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-          className="mb-8"
+          transition={{ duration: 0.3, ease: "easeOut" }}
+          className="mb-12"
         >
           <Link href="/">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
-              className="flex items-center text-[#4a4e69] hover:text-[#22223b] transition-colors duration-200 mb-4"
+              transition={{ duration: 0.1 }}
+              className="flex items-center text-[#4a4e69] hover:text-[#22223b] transition-colors duration-150 mb-4"
             >
               <svg
                 className="w-5 h-5 mr-2"
@@ -63,20 +69,26 @@ export default function CreatePost() {
             </motion.button>
           </Link>
 
-          <h1 className="text-3xl md:text-4xl font-bold text-[#22223b] mb-2">
-            Create New Post
-          </h1>
-          <p className="text-[#4a4e69]">
-            Share your knowledge and insights with the developer community
-          </p>
+          <div className="text-center">
+            <div className="w-20 h-20 bg-gradient-to-br from-[#22223b] to-[#4a4e69] rounded-3xl flex items-center justify-center mx-auto mb-6">
+              <span className="text-white text-3xl font-bold">✍️</span>
+            </div>
+            <h1 className="text-4xl md:text-5xl font-bold text-[#22223b] mb-4">
+              Create New Post
+            </h1>
+            <p className="text-xl text-[#4a4e69] max-w-2xl mx-auto">
+              Share your knowledge and insights with the developer community.
+              Your voice matters in shaping the future of technology.
+            </p>
+          </div>
         </motion.div>
 
         {/* Form */}
         <motion.form
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-          className="bg-white rounded-lg shadow-md p-8"
+          transition={{ duration: 0.3, delay: 0.1, ease: "easeOut" }}
+          className="card p-10"
           onSubmit={handleSubmit}
         >
           <div className="space-y-6">
@@ -194,27 +206,29 @@ export default function CreatePost() {
 
           {/* Action Buttons */}
           <motion.div
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+            transition={{ duration: 0.2, delay: 0.1 }}
             className="flex flex-col sm:flex-row gap-4 mt-8"
           >
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.1 }}
               type="submit"
-              className="flex-1 bg-[#22223b] text-white py-3 px-6 rounded-md hover:bg-[#4a4e69] transition-colors duration-200 font-medium"
+              className="flex-1 btn-primary py-4 text-lg font-semibold"
             >
-              Publish Post
+              🚀 Publish Post
             </motion.button>
 
             <motion.button
               whileHover={{ scale: 1.02 }}
               whileTap={{ scale: 0.98 }}
+              transition={{ duration: 0.1 }}
               type="button"
-              className="flex-1 bg-[#f2e9e4] text-[#22223b] py-3 px-6 rounded-md hover:bg-[#4a4e69] hover:text-white transition-colors duration-200 font-medium border border-[#4a4e69]"
+              className="flex-1 btn-secondary py-4 text-lg font-semibold"
             >
-              Save as Draft
+              💾 Save as Draft
             </motion.button>
           </motion.div>
         </motion.form>
