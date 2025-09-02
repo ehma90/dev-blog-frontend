@@ -33,7 +33,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.3, delay: 0.3, ease: "easeOut" }}
-          className="mt-8"
+          className="mb-8 block"
         >
           <div className="flex flex-wrap justify-center gap-4 text-sm text-[#4a4e69]">
             <span className="bg-white/80 px-4 py-2 rounded-full">

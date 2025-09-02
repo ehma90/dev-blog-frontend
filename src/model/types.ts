@@ -10,7 +10,6 @@ export interface BlogPost {
 
 export interface BlogPostCardProps {
   post: BlogPost;
-  index: number;
 }
 
 export interface BlogPostsGridProps {

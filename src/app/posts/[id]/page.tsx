@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { Button } from "../../components";
 
 // Mock data for blog posts
 const blogPosts = {
@@ -196,13 +197,7 @@ export default function BlogPost() {
             The blog post you're looking for doesn't exist.
           </p>
           <Link href="/">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#22223b] text-white px-6 py-2 rounded-md hover:bg-[#4a4e69] transition-colors duration-200"
-            >
-              Back to Home
-            </motion.button>
+            <Button>Back to Home</Button>
           </Link>
         </motion.div>
       </div>
@@ -220,11 +215,7 @@ export default function BlogPost() {
           className="mb-8"
         >
           <Link href="/">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="flex items-center text-[#4a4e69] hover:text-[#22223b] transition-colors duration-200"
-            >
+            <Button variant="outline" className="flex items-center">
               <svg
                 className="w-5 h-5 mr-2"
                 fill="none"
@@ -239,7 +230,7 @@ export default function BlogPost() {
                 />
               </svg>
               Back to Posts
-            </motion.button>
+            </Button>
           </Link>
         </motion.div>
 
@@ -306,13 +297,7 @@ export default function BlogPost() {
           className="mt-8 text-center"
         >
           <Link href={`/posts/edit/${post.id}`}>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#4a4e69] text-white px-6 py-2 rounded-md hover:bg-[#22223b] transition-colors duration-200"
-            >
-              Edit Post
-            </motion.button>
+            <Button variant="outline">Edit Post</Button>
           </Link>
         </motion.div>
       </div>

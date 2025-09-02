@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
+import { Button } from "../../../components";
 
 // Mock data for blog posts (same as in the single post page)
 const blogPosts = {
@@ -243,13 +244,7 @@ export default function EditPost() {
             The blog post you're trying to edit doesn't exist.
           </p>
           <Link href="/">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="bg-[#22223b] text-white px-6 py-2 rounded-md hover:bg-[#4a4e69] transition-colors duration-200"
-            >
-              Back to Home
-            </motion.button>
+            <Button>Back to Home</Button>
           </Link>
         </motion.div>
       </div>
@@ -268,11 +263,7 @@ export default function EditPost() {
         >
           <div className="flex items-center space-x-4 mb-4">
             <Link href="/">
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center text-[#4a4e69] hover:text-[#22223b] transition-colors duration-200"
-              >
+              <Button variant="outline" className="flex items-center">
                 <svg
                   className="w-5 h-5 mr-2"
                   fill="none"
@@ -287,15 +278,11 @@ export default function EditPost() {
                   />
                 </svg>
                 Back to Home
-              </motion.button>
+              </Button>
             </Link>
 
             <Link href={`/posts/${postId}`}>
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                className="flex items-center text-[#4a4e69] hover:text-[#22223b] transition-colors duration-200"
-              >
+              <Button variant="outline" className="flex items-center">
                 <svg
                   className="w-5 h-5 mr-2"
                   fill="none"
@@ -316,7 +303,7 @@ export default function EditPost() {
                   />
                 </svg>
                 View Post
-              </motion.button>
+              </Button>
             </Link>
           </div>
 
@@ -454,23 +441,17 @@ export default function EditPost() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 mt-8"
           >
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              type="submit"
-              className="flex-1 bg-[#22223b] text-white py-3 px-6 rounded-md hover:bg-[#4a4e69] transition-colors duration-200 font-medium"
-            >
+            <Button type="submit" size="lg" className="flex-1">
               Update Post
-            </motion.button>
+            </Button>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
+            <Button
               type="button"
-              className="flex-1 bg-red-600 text-white py-3 px-6 rounded-md hover:bg-red-700 transition-colors duration-200 font-medium"
+              size="lg"
+              className="flex-1 bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700"
             >
               Delete Post
-            </motion.button>
+            </Button>
           </motion.div>
         </motion.form>
 

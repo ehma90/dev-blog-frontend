@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { Button } from "../components";
 
 export default function Login() {
   const [formData, setFormData] = useState({
@@ -125,15 +126,9 @@ export default function Login() {
             </div>
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.02 }}
-            whileTap={{ scale: 0.98 }}
-            transition={{ duration: 0.1 }}
-            type="submit"
-            className="w-full btn-primary py-4 text-lg font-semibold"
-          >
+          <Button type="submit" size="lg" className="w-full">
             🚀 Sign In
-          </motion.button>
+          </Button>
 
           <div className="text-center">
             <p className="text-[#4a4e69]">

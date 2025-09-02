@@ -82,43 +82,7 @@ h3 {
   background: var(--primary-dark);
 }
 
-/* Enhanced button styles */
-.btn-primary {
-  background: linear-gradient(
-    135deg,
-    var(--primary-dark) 0%,
-    var(--secondary) 100%
-  );
-  color: white;
-  border: none;
-  border-radius: 12px;
-  padding: 12px 24px;
-  font-weight: 600;
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-  box-shadow: 0 4px 15px rgba(34, 34, 59, 0.2);
-}
-
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(34, 34, 59, 0.3);
-}
-
-.btn-secondary {
-  background: white;
-  color: var(--primary-dark);
-  border: 2px solid var(--secondary);
-  border-radius: 12px;
-  padding: 12px 24px;
-  font-weight: 600;
-  transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.btn-secondary:hover {
-  background: var(--secondary);
-  color: white;
-  transform: translateY(-2px);
-  box-shadow: 0 8px 25px rgba(74, 78, 105, 0.2);
-}
+/* Button styles are now handled by the Button component */
 
 /* Enhanced card styles */
 .card {
@@ -127,6 +91,8 @@ h3 {
   box-shadow: 0 10px 40px rgba(34, 34, 59, 0.1);
   transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 20px;
+  margin-top: 20px;
 }
 
 .card:hover {
@@ -163,11 +129,7 @@ h3 {
 }
 
 .gradient-text {
-  background: linear-gradient(
-    135deg,
-    var(--accent) 0%,
-    var(--secondary) 100%
-  );
+  background: linear-gradient(135deg, var(--accent) 0%, var(--secondary) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

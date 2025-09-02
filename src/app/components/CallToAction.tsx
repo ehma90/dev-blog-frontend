@@ -2,6 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
+import Button from "./Button";
 
 const CallToAction = () => {
   return (
@@ -37,24 +38,12 @@ const CallToAction = () => {
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
           <Link href="/create-post">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.1 }}
-              className="btn-primary px-8 py-4 text-lg"
-            >
-              ✍️ Create Your First Post
-            </motion.button>
+            <Button size="lg">✍️ Create Your First Post</Button>
           </Link>
           <Link href="/register">
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              transition={{ duration: 0.1 }}
-              className="btn-secondary px-8 py-4 text-lg"
-            >
+            <Button variant="outline" size="lg">
               🚀 Join Community
-            </motion.button>
+            </Button>
           </Link>
         </motion.div>
       </div>

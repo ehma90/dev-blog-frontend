@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
+import { Button } from "../components";
 
 export default function CreatePost() {
   const [formData, setFormData] = useState({
@@ -211,25 +212,18 @@ export default function CreatePost() {
             transition={{ duration: 0.2, delay: 0.1 }}
             className="flex flex-col sm:flex-row gap-4 mt-8"
           >
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.1 }}
-              type="submit"
-              className="flex-1 btn-primary py-4 text-lg font-semibold"
-            >
+            <Button type="submit" size="lg" className="flex-1">
               🚀 Publish Post
-            </motion.button>
+            </Button>
 
-            <motion.button
-              whileHover={{ scale: 1.02 }}
-              whileTap={{ scale: 0.98 }}
-              transition={{ duration: 0.1 }}
+            <Button
               type="button"
-              className="flex-1 btn-secondary py-4 text-lg font-semibold"
+              variant="outline"
+              size="lg"
+              className="flex-1"
             >
               💾 Save as Draft
-            </motion.button>
+            </Button>
           </motion.div>
         </motion.form>
 
