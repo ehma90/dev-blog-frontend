@@ -11,19 +11,19 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
-        duration: 0.3,
+        duration: 0.2,
         ease: "easeOut",
       }}
-      whileHover={{ y: -8, scale: 1.02 }}
+      whileHover={{ y: -4, scale: 1.02 }}
       className="card cursor-pointer"
     >
-      <div className="flex flex-col justify-between items-baseline gap-y-3">
-        <div className="space-y-3 h-full">
+      <div className="flex flex-col justify-between h-full gap-6">
+        <div className="flex flex-col gap-y-3 h-full">
           <div className="flex flex-wrap gap-2 mb-4">
             {post.tags.map((tag) => (
               <span
                 key={tag}
-                className="px-3 py-1 bg-gradient-to-r from-[#f2e9e4] to-[#c9ada7] text-[#4a4e69] text-xs font-semibold rounded-full shadow-sm"
+                className="!px-3 !py-1 bg-gradient-to-r from-[#f2e9e4] to-[#c9ada7] text-[#4a4e69] text-xs font-semibold rounded-full shadow-sm"
               >
                 {tag}
               </span>
@@ -39,7 +39,7 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
           </p>
 
           <div className="flex items-center justify-between text-sm text-[#4a4e69] mb-4">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center gap-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-[#22223b] to-[#4a4e69] rounded-full flex items-center justify-center">
                 <span className="text-white text-xs font-bold">
                   {post.author
@@ -48,9 +48,9 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
                     .join("")}
                 </span>
               </div>
-              <span className="font-medium">By {post.author}</span>
+              <span className="font-medium">by {post.author}</span>
             </div>
-            <span className="bg-[#f2e9e4] px-2 py-1 rounded-full text-xs font-medium">
+            <span className="bg-[#f2e9e4] !px-2 !py-1 rounded-full text-xs font-medium">
               {post.readTime}
             </span>
           </div>

@@ -8,7 +8,7 @@ const HeroSection = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.4, ease: "easeOut" }}
-      className="text-center mb-16 relative w-full"
+      className="text-center mb-16 !mt-8 relative w-full"
     >
       <div className="absolute inset-0 bg-gradient-to-r from-[#f2e9e4] via-white to-[#f2e9e4] opacity-50 rounded-3xl blur-3xl"></div>
       <div className="relative z-10 w-full py-16 flex flex-col justify-center items-center gap-4">
@@ -36,13 +36,13 @@ const HeroSection = () => {
           className="mb-8 block"
         >
           <div className="flex flex-wrap justify-center gap-4 text-sm text-[#4a4e69]">
-            <span className="bg-white/80 px-4 py-2 rounded-full">
+            <span className="bg-white/80 !px-3 !py-1.5 rounded-full">
               ✨ Latest Articles
             </span>
-            <span className="bg-white/80 px-4 py-2 rounded-full">
+            <span className="bg-white/80 !px-3 !py-1.5 rounded-full">
               🚀 Tech Trends
             </span>
-            <span className="bg-white/80 px-4 py-2 rounded-full">
+            <span className="bg-white/80 !px-3 !py-1.5 rounded-full">
               💡 Tutorials
             </span>
           </div>

@@ -10,9 +10,9 @@ const CallToAction = () => {
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.3, delay: 0.2 }}
-      className="text-center mt-20"
+      className="flex justify-center items-center !my-20"
     >
-      <div className="card p-12 max-w-4xl mx-auto">
+      <div className="card p-12 max-w-4xl mx-auto flex flex-col gap-y-6">
         <motion.h2
           className="text-3xl md:text-4xl font-bold text-[#22223b] mb-6"
           initial={{ scale: 0.95 }}
