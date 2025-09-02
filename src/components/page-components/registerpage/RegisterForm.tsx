@@ -6,6 +6,8 @@ import { useState } from "react";
 import Input from "../../Input";
 import Button from "@/components/Button";
 import { showToast } from "../../../utils/toast";
+import { useRegister } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 interface RegisterFormProps {
   onSubmit: (formData: {
@@ -23,6 +25,9 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
     password: "",
     confirmPassword: "",
   });
+
+  const registerMutation = useRegister();
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value, type, checked } = e.target;
@@ -61,16 +66,36 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
       return;
     }
 
-
     // Show loading toast
     const loadingToast = showToast.loading("Creating your account...");
 
-    // Simulate API call
-    setTimeout(() => {
-      showToast.dismiss(loadingToast);
-      showToast.success("Account created successfully! Welcome to Dev Blog!");
-      onSubmit(formData);
-    }, 2000);
+    // Use React Query mutation to register user
+    registerMutation.mutate(
+      {
+        fullName: formData.name,
+        email: formData.email,
+        password: formData.password,
+      },
+      {
+        onSuccess: () => {
+          showToast.dismiss(loadingToast);
+          showToast.success(
+            "Account created successfully! Welcome to Dev Blog!"
+          );
+          // Call the original onSubmit callback
+          onSubmit(formData);
+          // Redirect to home page
+          router.push("/");
+        },
+        onError: (error: any) => {
+          showToast.dismiss(loadingToast);
+          const errorMessage =
+            error?.response?.data?.message ||
+            "Registration failed. Please try again.";
+          showToast.error(errorMessage);
+        },
+      }
+    );
   };
 
   return (
@@ -127,10 +152,15 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
         />
       </div>
 
-      
-
-      <Button type="submit" size="lg" className="w-full">
-        🎯 Create Account
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full"
+        disabled={registerMutation.isPending}
+      >
+        {registerMutation.isPending
+          ? "Creating Account..."
+          : "🎯 Create Account"}
       </Button>
 
       <div className="text-center !my-4">

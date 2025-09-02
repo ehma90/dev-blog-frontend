@@ -1,0 +1,129 @@
+### Complete API Testing Flow
+### This file demonstrates the complete flow of using the API
+
+@baseUrl = http://localhost:4000
+@contentType = application/json
+
+@token = Bearer {{token}}
+
+### Step 1: Register a new user
+POST {{baseUrl}}/auth/register
+Content-Type: {{contentType}}
+
+{
+  "fullName": "Test User",
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+> {%
+  // Extract token from response and set it as a variable
+  if (response.status === 200 || response.status === 201) {
+    client.global.set("token", response.body.token);
+    client.log("Token set: " + response.body.token);
+  }
+%}
+
+###
+
+### Step 2: Login with the same user
+POST {{baseUrl}}/auth/login
+Content-Type: {{contentType}}
+
+{
+  "email": "test@example.com",
+  "password": "password123"
+}
+
+> {%
+  // Update token from login response
+  if (response.status === 200) {
+    client.global.set("token", response.body.token);
+    client.log("Token updated: " + response.body.token);
+  }
+%}
+
+###
+
+### Step 3: Get current user info
+GET {{baseUrl}}/auth/me
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+###
+
+### Step 4: Create a new blog post
+POST {{baseUrl}}/api/posts
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "title": "My Test Blog Post",
+  "excerpt": "This is a test blog post created via API",
+  "content": "<h1>Test Post</h1><p>This is a test blog post created through the API testing flow.</p><h2>Features</h2><ul><li>HTML formatting</li><li>Multiple paragraphs</li><li>Lists and headers</li></ul>",
+  "author": "Test User",
+  "tags": "test, api, blog"
+}
+
+> {%
+  // Store the created post ID for later use
+  if (response.status === 200 || response.status === 201) {
+    client.global.set("postId", response.body.id);
+    client.log("Post created with ID: " + response.body.id);
+  }
+%}
+
+###
+
+### Step 5: Get all posts to see our new post
+GET {{baseUrl}}/api/posts
+Content-Type: {{contentType}}
+
+###
+
+### Step 6: Get the specific post we just created
+GET {{baseUrl}}/api/posts/POST_ID
+Content-Type: {{contentType}}
+
+###
+
+### Step 7: Update the post
+PUT {{baseUrl}}/api/posts/POST_ID
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "title": "Updated Test Blog Post",
+  "excerpt": "This is an updated test blog post",
+  "content": "<h1>Updated Test Post</h1><p>This blog post has been updated through the API.</p><h2>New Features</h2><ul><li>Updated content</li><li>Better formatting</li><li>More information</li></ul>",
+  "author": "Test User",
+  "tags": "test, api, blog, updated"
+}
+
+###
+
+### Step 8: Get the updated post
+GET {{baseUrl}}/api/posts/POST_ID
+Content-Type: {{contentType}}
+
+###
+
+### Step 9: Delete the test post
+DELETE {{baseUrl}}/api/posts/POST_ID
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+###
+
+### Step 10: Verify the post was deleted
+GET {{baseUrl}}/api/posts/POST_ID
+Content-Type: {{contentType}}
+
+###
+
+### Step 11: Logout
+POST {{baseUrl}}/auth/logout
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+###

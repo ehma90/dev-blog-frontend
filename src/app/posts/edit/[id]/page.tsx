@@ -7,6 +7,7 @@ import { useState, useEffect } from "react";
 import { Button } from "../../../../components";
 import Input from "../../../../components/Input";
 import { blogPosts } from "@/mock-data/blog-post";
+import { usePost, useUpdatePost } from "@/hooks/usePosts";
 
 export default function EditPost() {
   const params = useParams();
@@ -18,6 +19,10 @@ export default function EditPost() {
     tags: "",
     author: "",
   });
+
+  // Example of using React Query hooks (commented out for now since we're using mock data)
+  // const { data: post, isLoading, error } = usePost(postId);
+  // const updatePost = useUpdatePost();
 
   useEffect(() => {
     const post = blogPosts[postId as keyof typeof blogPosts];
@@ -45,6 +50,14 @@ export default function EditPost() {
     e.preventDefault();
     // Handle post update logic here
     console.log("Updating post:", formData);
+
+    // Example of using React Query mutation (commented out for now since we're using mock data)
+    // updatePost.mutate({
+    //   id: postId,
+    //   ...formData,
+    //   tags: formData.tags.split(',').map(tag => tag.trim())
+    // });
+
     // In a real app, you would send this to your backend
     alert("Post updated successfully! (This is a demo)");
   };

@@ -3,16 +3,49 @@
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { useState } from "react";
+import { useUser, useLogout } from "@/hooks/useAuth";
+import { showToast } from "@/utils/toast";
 
 const Navigation = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { data: user, isLoading: userLoading } = useUser();
+  const logoutMutation = useLogout();
 
-  const navItems = [
+  // Navigation items for authenticated users
+  const authenticatedNavItems = [
+    { href: "/", label: "Home" },
+    { href: "/create-post", label: "Create Post" },
+  ];
+
+  // Navigation items for unauthenticated users
+  const unauthenticatedNavItems = [
     { href: "/", label: "Home" },
     { href: "/login", label: "Login" },
     { href: "/register", label: "Register" },
-    { href: "/create-post", label: "Create Post" },
   ];
+
+  // Get user initials from fullName
+  const getUserInitials = (fullName: string) => {
+    return fullName
+      .split(" ")
+      .map((name) => name.charAt(0))
+      .join("")
+      .toUpperCase()
+      .slice(0, 2);
+  };
+
+  // Handle logout
+  const handleLogout = () => {
+    logoutMutation.mutate(undefined, {
+      onSuccess: () => {
+        showToast.success("Logged out successfully");
+        setIsMenuOpen(false);
+      },
+      onError: () => {
+        showToast.error("Logout failed. Please try again.");
+      },
+    });
+  };
 
   return (
     <motion.nav
@@ -46,10 +79,10 @@ const Navigation = () => {
             </Link>
           </motion.div>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:block">
-            <div className="ml-10 flex items-center gap-x-4">
-              {navItems.map((item, index) => (
+          {/* Navigation Items */}
+          <div className="items-center gap-x-4 hidden md:flex">
+            {(user ? authenticatedNavItems : unauthenticatedNavItems).map(
+              (item, index) => (
                 <motion.div
                   key={item.href}
                   initial={{ opacity: 0, y: -20 }}
@@ -65,7 +98,52 @@ const Navigation = () => {
                     <span>{item.label}</span>
                   </Link>
                 </motion.div>
-              ))}
+              )
+            )}
+          </div>
+
+          <div className="hidden md:block">
+            <div className="ml-10 flex items-center gap-x-4">
+              {/* User Profile / Auth Section */}
+              {userLoading ? (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  className="flex items-center gap-2"
+                >
+                  <div className="w-8 h-8 bg-[#4a4e69] rounded-full animate-pulse"></div>
+                  <div className="w-16 h-4 bg-[#4a4e69] rounded animate-pulse"></div>
+                </motion.div>
+              ) : user ? (
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  className="flex items-center gap-3"
+                >
+                  {/* User Avatar with Initials */}
+                  <div className="w-8 h-8 bg-gradient-to-br from-[#f2e9e4] to-[#c9ada7] rounded-full flex items-center justify-center">
+                    <span className="text-[#22223b] font-bold text-sm">
+                      {getUserInitials(user.fullName)}
+                    </span>
+                  </div>
+
+                  {/* User Name */}
+                  <span className="text-[#f2e9e4] text-sm font-medium">
+                    {user.fullName}
+                  </span>
+
+                  {/* Logout Button */}
+                  <motion.button
+                    whileHover={{ scale: 1.05 }}
+                    whileTap={{ scale: 0.95 }}
+                    onClick={handleLogout}
+                    disabled={logoutMutation.isPending}
+                    className="text-[#f2e9e4] hover:text-white text-sm font-medium px-3 py-1 rounded-md hover:bg-white/10 transition-colors duration-200 disabled:opacity-50"
+                  >
+                    {logoutMutation.isPending ? "Logging out..." : "Logout"}
+                  </motion.button>
+                </motion.div>
+              ) : null}
             </div>
           </div>
 
@@ -111,22 +189,68 @@ const Navigation = () => {
             </span>
           </div>
           <div className="flex flex-col gap-5 sm:px-3">
-            {navItems.map((item, index) => (
+            {/* Navigation Items */}
+            {(user ? authenticatedNavItems : unauthenticatedNavItems).map(
+              (item, index) => (
+                <motion.div
+                  key={item.href}
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                >
+                  <Link
+                    href={item.href}
+                    className="text-[#f2e9e4] hover:border-b-2 border-[#ffffff] hover:border-[#ffffff] block px-3 py-2 rounded-md text-base font-medium"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                </motion.div>
+              )
+            )}
+
+            {/* User Profile Section for Mobile */}
+            {userLoading ? (
               <motion.div
-                key={item.href}
                 initial={{ opacity: 0, x: -20 }}
                 animate={{ opacity: 1, x: 0 }}
-                transition={{ delay: index * 0.1 }}
+                className="flex items-center gap-3 px-3 py-2"
               >
-                <Link
-                  href={item.href}
-                  className="text-[#f2e9e4] hover:border-b-2 border-[#ffffff] hover:border-[#ffffff] block px-3 py-2 rounded-md text-base font-medium"
-                  onClick={() => setIsMenuOpen(false)}
-                >
-                  {item.label}
-                </Link>
+                <div className="w-8 h-8 bg-[#4a4e69] rounded-full animate-pulse"></div>
+                <div className="w-24 h-4 bg-[#4a4e69] rounded animate-pulse"></div>
               </motion.div>
-            ))}
+            ) : user ? (
+              <motion.div
+                initial={{ opacity: 0, x: -20 }}
+                animate={{ opacity: 1, x: 0 }}
+                className="border-t border-white/20 pt-4 mt-4"
+              >
+                {/* User Info */}
+                <div className="flex items-center gap-3 px-3 py-2 mb-3">
+                  <div className="w-10 h-10 bg-gradient-to-br from-[#f2e9e4] to-[#c9ada7] rounded-full flex items-center justify-center">
+                    <span className="text-[#22223b] font-bold text-sm">
+                      {getUserInitials(user.fullName)}
+                    </span>
+                  </div>
+                  <div>
+                    <p className="text-[#f2e9e4] font-medium">
+                      {user.fullName}
+                    </p>
+                    <p className="text-[#f2e9e4]/70 text-sm">{user.email}</p>
+                  </div>
+                </div>
+
+                {/* Logout Button */}
+                <motion.button
+                  whileTap={{ scale: 0.95 }}
+                  onClick={handleLogout}
+                  disabled={logoutMutation.isPending}
+                  className="w-full text-left text-[#f2e9e4] hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 disabled:opacity-50"
+                >
+                  {logoutMutation.isPending ? "Logging out..." : "Logout"}
+                </motion.button>
+              </motion.div>
+            ) : null}
           </div>
         </motion.div>
       )}

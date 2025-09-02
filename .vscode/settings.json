@@ -1,0 +1,19 @@
+{
+  "rest-client.environmentVariables": {
+    "development": {
+      "baseUrl": "http://localhost:4000",
+      "contentType": "application/json"
+    },
+    "production": {
+      "baseUrl": "https://your-production-api.com",
+      "contentType": "application/json"
+    }
+  },
+  "rest-client.defaultHeaders": {
+    "Content-Type": "application/json"
+  },
+  "rest-client.timeoutinmilliseconds": 10000,
+  "rest-client.showResponseInDifferentTab": true,
+  "rest-client.rememberCookiesForSubsequentRequests": true,
+  "rest-client.enableTelemetry": false
+}

@@ -6,6 +6,8 @@ import { useState } from "react";
 import Input from "../../Input";
 import Button from "@/components/Button";
 import { showToast } from "../../../utils/toast";
+import { useLogin } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 interface LoginFormProps {
   onSubmit: (formData: { email: string; password: string }) => void;
@@ -16,6 +18,9 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
     email: "",
     password: "",
   });
+
+  const loginMutation = useLogin();
+  const router = useRouter();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setFormData({
@@ -41,12 +46,32 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
     // Show loading toast
     const loadingToast = showToast.loading("Signing in...");
 
-    // Simulate API call
-    setTimeout(() => {
-      showToast.dismiss(loadingToast);
-      showToast.success("Welcome back! You've been signed in successfully.");
-      onSubmit(formData);
-    }, 1500);
+    // Use React Query mutation to login user
+    loginMutation.mutate(
+      {
+        email: formData.email,
+        password: formData.password,
+      },
+      {
+        onSuccess: () => {
+          showToast.dismiss(loadingToast);
+          showToast.success(
+            "Welcome back! You've been signed in successfully."
+          );
+          // Call the original onSubmit callback
+          onSubmit(formData);
+          // Redirect to home page
+          router.push("/");
+        },
+        onError: (error: any) => {
+          showToast.dismiss(loadingToast);
+          const errorMessage =
+            error?.response?.data?.message ||
+            "Login failed. Please check your credentials and try again.";
+          showToast.error(errorMessage);
+        },
+      }
+    );
   };
 
   return (
@@ -81,8 +106,13 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
         />
       </div>
 
-      <Button type="submit" size="lg" className="w-full">
-        🚀 Sign In
+      <Button
+        type="submit"
+        size="lg"
+        className="w-full"
+        disabled={loginMutation.isPending}
+      >
+        {loginMutation.isPending ? "Signing In..." : "🚀 Sign In"}
       </Button>
 
       <div className="text-center !my-4">

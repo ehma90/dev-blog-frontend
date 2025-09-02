@@ -1,0 +1,52 @@
+### Variables
+@baseUrl = http://localhost:4000
+@contentType = application/json
+
+@token = Bearer {{token}}
+
+### Get all users (requires token)
+GET {{baseUrl}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+###
+
+### Get user by ID (requires token)
+GET {{baseUrl}}/api/users/1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+###
+
+### Create a new user (requires token)
+POST {{baseUrl}}/api/users
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "name": "Jane Smith",
+  "email": "jane.smith@example.com",
+  "avatar": "https://example.com/avatar.jpg"
+}
+
+###
+
+### Update a user (requires token)
+PUT {{baseUrl}}/api/users/1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+{
+  "name": "John Doe Updated",
+  "email": "john.doe.updated@example.com",
+  "avatar": "https://example.com/new-avatar.jpg"
+}
+
+###
+
+### Delete a user (requires token)
+DELETE {{baseUrl}}/api/users/1
+Authorization: Bearer {{token}}
+Content-Type: {{contentType}}
+
+###
