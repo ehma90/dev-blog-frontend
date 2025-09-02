@@ -84,6 +84,15 @@ h3 {
 
 /* Button styles are now handled by the Button component */
 
+/* Toast progress bar styling */
+.Toastify__progress-bar {
+  background: linear-gradient(
+    135deg,
+    var(--primary-dark) 0%,
+    var(--secondary) 100%
+  ) !important;
+}
+
 /* Enhanced card styles */
 .card {
   background: white;

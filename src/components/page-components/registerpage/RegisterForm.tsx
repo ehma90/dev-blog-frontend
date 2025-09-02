@@ -7,20 +7,28 @@ import Input from "../../Input";
 import Button from "@/components/Button";
 import { showToast } from "../../../utils/toast";
 
-interface LoginFormProps {
-  onSubmit: (formData: { email: string; password: string }) => void;
+interface RegisterFormProps {
+  onSubmit: (formData: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+  }) => void;
 }
 
-const LoginForm = ({ onSubmit }: LoginFormProps) => {
+const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
   const [formData, setFormData] = useState({
+    name: "",
     email: "",
     password: "",
+    confirmPassword: "",
   });
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value, type, checked } = e.target;
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value,
+      [name]: type === "checkbox" ? checked : value,
     });
   };
 
@@ -28,7 +36,12 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
     e.preventDefault();
 
     // Basic validation
-    if (!formData.email || !formData.password) {
+    if (
+      !formData.name ||
+      !formData.email ||
+      !formData.password ||
+      !formData.confirmPassword
+    ) {
       showToast.error("Please fill in all fields");
       return;
     }
@@ -38,15 +51,26 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
       return;
     }
 
+    if (formData.password.length < 6) {
+      showToast.error("Password must be at least 6 characters long");
+      return;
+    }
+
+    if (formData.password !== formData.confirmPassword) {
+      showToast.error("Passwords do not match");
+      return;
+    }
+
+
     // Show loading toast
-    const loadingToast = showToast.loading("Signing in...");
+    const loadingToast = showToast.loading("Creating your account...");
 
     // Simulate API call
     setTimeout(() => {
       showToast.dismiss(loadingToast);
-      showToast.success("Welcome back! You've been signed in successfully.");
+      showToast.success("Account created successfully! Welcome to Dev Blog!");
       onSubmit(formData);
-    }, 1500);
+    }, 2000);
   };
 
   return (
@@ -58,6 +82,17 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
       onSubmit={handleSubmit}
     >
       <div className="flex flex-col gap-y-6 !mb-8">
+        <Input
+          id="name"
+          name="name"
+          type="text"
+          label="Full Name"
+          required
+          value={formData.name}
+          onChange={handleChange}
+          placeholder="Enter your full name"
+        />
+
         <Input
           id="email"
           name="email"
@@ -77,22 +112,35 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
           required
           value={formData.password}
           onChange={handleChange}
-          placeholder="Enter your password"
+          placeholder="Create a password"
+        />
+
+        <Input
+          id="confirmPassword"
+          name="confirmPassword"
+          type="password"
+          label="Confirm Password"
+          required
+          value={formData.confirmPassword}
+          onChange={handleChange}
+          placeholder="Confirm your password"
         />
       </div>
 
+      
+
       <Button type="submit" size="lg" className="w-full">
-        🚀 Sign In
+        🎯 Create Account
       </Button>
 
       <div className="text-center !my-4">
         <p className="text-[#4a4e69]">
-          Don't have an account?{" "}
+          Already have an account?{" "}
           <Link
-            href="/register"
+            href="/login"
             className="text-[#22223b] hover:text-[#4a4e69] transition-colors duration-200 font-medium"
           >
-            Sign up here
+            Sign in here
           </Link>
         </p>
       </div>
@@ -100,4 +148,4 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
   );
 };
 
-export default LoginForm;
+export default RegisterForm;

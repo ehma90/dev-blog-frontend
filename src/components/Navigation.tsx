@@ -110,7 +110,7 @@ const Navigation = () => {
               X
             </span>
           </div>
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+          <div className="flex flex-col gap-5 sm:px-3">
             {navItems.map((item, index) => (
               <motion.div
                 key={item.href}
