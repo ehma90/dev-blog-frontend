@@ -3,7 +3,8 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "../../components";
+import Button from "../../components/Button";
+import Input from "../../components/Input";
 
 export default function Register() {
   const [formData, setFormData] = useState({

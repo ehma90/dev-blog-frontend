@@ -26,7 +26,7 @@ const Navigation = () => {
         boxShadow: "0 8px 32px rgba(34, 34, 59, 0.3)",
       }}
     >
-      <div className="max-w-7xl mx-auto w-full px-4 sm:px-6 lg:px-8">
+      <div className="max-w-7xl mx-auto w-full !px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <motion.div
@@ -63,7 +63,6 @@ const Navigation = () => {
                 >
                   <Link href={item.href}>
                     <span>{item.label}</span>
-                   
                   </Link>
                 </motion.div>
               ))}
@@ -101,8 +100,16 @@ const Navigation = () => {
           initial={{ opacity: 0, height: 0 }}
           animate={{ opacity: 1, height: "auto" }}
           exit={{ opacity: 0, height: 0 }}
-          className="md:hidden bg-[#4a4e69]"
+          className="md:hidden bg-[#4a4e69] !p-3 h-screen absolute top-0 left-0 w-full"
         >
+          <div className="flex justify-end">
+            <span
+              onClick={() => setIsMenuOpen(!isMenuOpen)}
+              className="text-[#f2e9e4] hover:text-[#4a4e69] focus:outline-none focus:text-[#4a4e69] border rounded-full !p-3 flex items-center justify-center w-7 h-7 cursor-pointer"
+            >
+              X
+            </span>
+          </div>
           <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
             {navItems.map((item, index) => (
               <motion.div
@@ -113,7 +120,7 @@ const Navigation = () => {
               >
                 <Link
                   href={item.href}
-                  className="text-[#f2e9e4] hover:text-[#ffffff] block px-3 py-2 rounded-md text-base font-medium"
+                  className="text-[#f2e9e4] hover:border-b-2 border-[#ffffff] hover:border-[#ffffff] block px-3 py-2 rounded-md text-base font-medium"
                   onClick={() => setIsMenuOpen(false)}
                 >
                   {item.label}
