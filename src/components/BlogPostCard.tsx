@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { BlogPostCardProps } from "../../model/types";
+import { BlogPostCardProps } from "../model/types";
 import Button from "./Button";
 
 const BlogPostCard = ({ post }: BlogPostCardProps) => {

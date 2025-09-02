@@ -3,7 +3,7 @@ import {
   BlogPostsGrid,
   CallToAction,
   blogPosts,
-} from "./components";
+} from "../components";
 
 export default function Home() {
   return (

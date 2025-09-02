@@ -3,7 +3,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useState } from "react";
-import { Button } from "../components";
+import { Button } from "../../components";
 
 export default function Login() {
   const [formData, setFormData] = useState({

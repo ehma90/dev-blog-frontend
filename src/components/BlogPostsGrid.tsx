@@ -1,9 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { BlogPostsGridProps } from "../../model/types";
+import { BlogPostsGridProps } from "../model/types";
 import BlogPostCard from "./BlogPostCard";
-
 
 const BlogPostsGrid = ({ posts }: BlogPostsGridProps) => {
   return (

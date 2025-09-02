@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useState, useEffect } from "react";
-import { Button } from "../../../components";
+import { Button } from "../../../../components";
 
 // Mock data for blog posts (same as in the single post page)
 const blogPosts = {

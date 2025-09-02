@@ -4,5 +4,5 @@ export { default as BlogPostCard } from "./BlogPostCard";
 export { default as BlogPostsGrid } from "./BlogPostsGrid";
 export { default as CallToAction } from "./CallToAction";
 export { default as Button } from "./Button";
-export * from "../../model/types";
+export * from "../model/types";
 export { blogPosts } from "./data";
