@@ -25,7 +25,7 @@ export default function BlogPost() {
             Post Not Found
           </h1>
           <p className="text-[#4a4e69] mb-6">
-            The blog post you're looking for doesn't exist.
+            The blog post you&apos;re looking for doesn&apos;t exist.
           </p>
           <Link href="/">
             <Button>Back to Home</Button>

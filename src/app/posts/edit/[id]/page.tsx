@@ -241,7 +241,7 @@ export default function EditPost() {
             Post Not Found
           </h1>
           <p className="text-[#4a4e69] mb-6">
-            The blog post you're trying to edit doesn't exist.
+            The blog post your&apos;e trying to edit doesn&apos;t exist.
           </p>
           <Link href="/">
             <Button>Back to Home</Button>

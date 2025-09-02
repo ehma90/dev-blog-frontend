@@ -87,7 +87,7 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
 
       <div className="text-center !my-4">
         <p className="text-[#4a4e69]">
-          Don't have an account?{" "}
+          Don&apos;t have an account?{" "}
           <Link
             href="/register"
             className="text-[#22223b] hover:text-[#4a4e69] transition-colors duration-200 font-medium"
