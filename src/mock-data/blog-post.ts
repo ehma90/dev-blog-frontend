@@ -35,47 +35,9 @@ export const blogPosts = {
       `,
       author: "John Doe",
       date: "2024-01-15",
+      excerpt: "Learn the fundamentals of Next.js 14 and how to build modern web applications with the latest features.",
       readTime: "5 min read",
       tags: ["Next.js", "React", "Web Development"],
-    },
-    "2": {
-      id: "2",
-      title: "Mastering TypeScript for React",
-      content: `
-        <h2>Why TypeScript?</h2>
-        <p>TypeScript brings static type checking to JavaScript, making your React applications more robust and maintainable. It helps catch errors at compile time and provides better IDE support.</p>
-        
-        <h2>Setting Up TypeScript with React</h2>
-        <p>To add TypeScript to an existing React project:</p>
-        <pre><code>npm install --save-dev typescript @types/react @types/react-dom</code></pre>
-        
-        <h2>Basic Type Definitions</h2>
-        <p>Here are some essential TypeScript patterns for React:</p>
-        <pre><code>
-  interface Props {
-    title: string;
-    count: number;
-    isActive: boolean;
-  }
-  
-  const MyComponent: React.FC<Props> = ({ title, count, isActive }) => {
-    return (
-      <div>
-        <h1>{title}</h1>
-        <p>Count: {count}</p>
-        <p>Status: {isActive ? 'Active' : 'Inactive'}</p>
-      </div>
-    );
-  };
-        </code></pre>
-        
-        <h2>Advanced Patterns</h2>
-        <p>TypeScript enables powerful patterns like generic components and strict type checking. This leads to more reliable code and better developer experience.</p>
-      `,
-      author: "Jane Smith",
-      date: "2024-01-12",
-      readTime: "8 min read",
-      tags: ["TypeScript", "React", "Programming"],
     },
     "3": {
       id: "3",
@@ -112,59 +74,8 @@ export const blogPosts = {
       `,
       author: "Mike Johnson",
       date: "2024-01-10",
+      excerpt: "Learn the fundamentals of Next.js 14 and how to build modern web applications with the latest features.",
       readTime: "6 min read",
       tags: ["CSS", "Tailwind", "Design"],
-    },
-    "4": {
-      id: "4",
-      title: "State Management in Modern React",
-      content: `
-        <h2>Understanding State Management</h2>
-        <p>State management is crucial for building complex React applications. Let's explore different approaches and when to use each one.</p>
-        
-        <h2>Built-in State Solutions</h2>
-        <h3>useState Hook</h3>
-        <p>The useState hook is perfect for local component state:</p>
-        <pre><code>
-  const [count, setCount] = useState(0);
-  const [user, setUser] = useState(null);
-        </code></pre>
-        
-        <h3>useReducer Hook</h3>
-        <p>For complex state logic, useReducer provides more control:</p>
-        <pre><code>
-  const [state, dispatch] = useReducer(reducer, initialState);
-        </code></pre>
-        
-        <h2>External State Management</h2>
-        <h3>Redux Toolkit</h3>
-        <p>Redux Toolkit simplifies Redux usage with less boilerplate:</p>
-        <ul>
-          <li>Simplified store setup</li>
-          <li>Built-in Redux DevTools</li>
-          <li>Immer for immutable updates</li>
-        </ul>
-        
-        <h3>Zustand</h3>
-        <p>Zustand is a lightweight alternative to Redux:</p>
-        <ul>
-          <li>Minimal boilerplate</li>
-          <li>TypeScript support</li>
-          <li>No providers needed</li>
-        </ul>
-        
-        <h2>Choosing the Right Solution</h2>
-        <p>Consider these factors when choosing a state management solution:</p>
-        <ul>
-          <li>Application complexity</li>
-          <li>Team experience</li>
-          <li>Performance requirements</li>
-          <li>Developer experience</li>
-        </ul>
-      `,
-      author: "Sarah Wilson",
-      date: "2024-01-08",
-      readTime: "10 min read",
-      tags: ["React", "State Management", "Redux"],
     },
   };

@@ -5,4 +5,4 @@ export { default as BlogPostsGrid } from "./BlogPostsGrid";
 export { default as CallToAction } from "./CallToAction";
 export { default as Button } from "./Button";
 export * from "../model/types";
-export { blogPosts } from "./data";
+export { blogPosts } from "../mock-data/data";

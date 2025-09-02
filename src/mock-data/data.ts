@@ -1,5 +1,6 @@
 import { BlogPost } from "../model/types";
 
+
 export const blogPosts: BlogPost[] = [
   {
     id: "1",
@@ -12,16 +13,6 @@ export const blogPosts: BlogPost[] = [
     tags: ["Next.js", "React", "Web Development"],
   },
   {
-    id: "2",
-    title: "Mastering TypeScript for React",
-    excerpt:
-      "A comprehensive guide to using TypeScript effectively in React applications for better type safety.",
-    author: "Jane Smith",
-    date: "2024-01-12",
-    readTime: "8 min read",
-    tags: ["TypeScript", "React", "Programming"],
-  },
-  {
     id: "3",
     title: "Building Responsive UIs with Tailwind CSS",
     excerpt:
@@ -30,15 +21,5 @@ export const blogPosts: BlogPost[] = [
     date: "2024-01-10",
     readTime: "6 min read",
     tags: ["CSS", "Tailwind", "Design"],
-  },
-  {
-    id: "4",
-    title: "State Management in Modern React",
-    excerpt:
-      "Explore different state management solutions for React applications, from useState to Redux Toolkit.",
-    author: "Sarah Wilson",
-    date: "2024-01-08",
-    readTime: "10 min read",
-    tags: ["React", "State Management", "Redux"],
   },
 ];

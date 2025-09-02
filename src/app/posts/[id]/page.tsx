@@ -37,7 +37,7 @@ export default function BlogPost() {
 
   return (
     <div className="min-h-screen !mx-auto !py-8">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-4xl mx-auto !px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between">
           {/* Back Button */}
           <motion.div
@@ -61,7 +61,7 @@ export default function BlogPost() {
                     d="M15 19l-7-7 7-7"
                   />
                 </svg>
-                Back to Posts
+                Back
               </Button>
             </Link>
           </motion.div>
