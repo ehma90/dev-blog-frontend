@@ -245,7 +245,7 @@ const Navigation = () => {
                   whileTap={{ scale: 0.95 }}
                   onClick={handleLogout}
                   disabled={logoutMutation.isPending}
-                  className="w-full text-left text-[#f2e9e4] hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 disabled:opacity-50"
+                  className="!mt-6 block w-full text-left text-[#f2e9e4] hover:text-white hover:bg-white/10 px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 disabled:opacity-50"
                 >
                   {logoutMutation.isPending ? "Logging out..." : "Logout"}
                 </motion.button>

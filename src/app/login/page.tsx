@@ -6,12 +6,20 @@ import {
   LoginHeader,
   LoginForm,
 } from "../../components/page-components/loginpage";
+import { useUser } from "@/hooks/useAuth";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
-  const handleLogin = (formData: { email: string; password: string }) => {
-    // Handle login logic here
-    console.log("Login attempt:", formData);
-  };
+  const { data: user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
+
 
   return (
     <div className="min-h-screen flex lg:items-center justify-center py-12 !px-4 sm:px-6 lg:px-8 relative">
@@ -27,7 +35,7 @@ export default function Login() {
          
         />
 
-        <LoginForm onSubmit={handleLogin} />
+        <LoginForm />
 
         <motion.div
           initial={{ opacity: 0 }}

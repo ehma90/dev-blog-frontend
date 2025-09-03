@@ -2,13 +2,13 @@ import { API_CONFIG } from "@/config/api";
 
 // Types
 export interface BlogPost {
-  id: string;
+  _id: string;
   title: string;
   excerpt: string;
   content: string;
-  author: string;
+  authorName: string;
   tags: string[];
-  date: string;
+  createdAt: string;
   readTime: string;
 }
 
@@ -16,16 +16,16 @@ export interface CreatePostData {
   title: string;
   excerpt: string;
   content: string;
-  author: string;
-  tags: string;
+  authorName: string;
+  tags: string[];
 }
 
 export interface UpdatePostData extends Partial<CreatePostData> {
-  id: string;
+  _id: string;
 }
 
 export interface User {
-  id: string;
+  _id: string;
   fullName: string;
   email: string;
   avatar?: string;
@@ -126,9 +126,9 @@ export const postsApi = {
 
   // Update post
   update: async (data: UpdatePostData): Promise<BlogPost> => {
-    const { id, ...updateData } = data;
-    const response = await fetch(`${API_CONFIG.BASE_URL}/posts/${id}`, {
-      method: "PUT",
+    const { _id, ...updateData } = data;
+    const response = await fetch(`${API_CONFIG.BASE_URL}/posts/${_id}`, {
+      method: "PATCH",
       headers: createHeaders(true), // Auth required
       body: JSON.stringify(updateData),
     });
@@ -143,8 +143,8 @@ export const postsApi = {
   },
 
   // Delete post
-  delete: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/posts/${id}`, {
+  delete: async (_id: string): Promise<void> => {
+    const response = await fetch(`${API_CONFIG.BASE_URL}/posts/${_id}`, {
       method: "DELETE",
       headers: createHeaders(true), // Auth required
     });
@@ -192,7 +192,7 @@ export const usersApi = {
   },
 
   // Create new user
-  create: async (data: Omit<User, "id" | "createdAt">): Promise<User> => {
+  create: async (data: Omit<User, "_id" | "createdAt">): Promise<User> => {
     const response = await fetch(`${API_CONFIG.BASE_URL}/users`, {
       method: "POST",
       headers: createHeaders(true), // Auth required
@@ -210,10 +210,10 @@ export const usersApi = {
 
   // Update user
   update: async (
-    id: string,
-    data: Partial<Omit<User, "id" | "createdAt">>
+    _id: string,
+    data: Partial<Omit<User, "_id" | "createdAt">>
   ): Promise<User> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/users/${id}`, {
+    const response = await fetch(`${API_CONFIG.BASE_URL}/users/${_id}`, {
       method: "PUT",
       headers: createHeaders(true), // Auth required
       body: JSON.stringify(data),
@@ -229,8 +229,8 @@ export const usersApi = {
   },
 
   // Delete user
-  delete: async (id: string): Promise<void> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/users/${id}`, {
+  delete: async (_id: string): Promise<void> => {
+    const response = await fetch(`${API_CONFIG.BASE_URL}/users/${_id}`, {
       method: "DELETE",
       headers: createHeaders(true), // Auth required
     });
@@ -283,7 +283,7 @@ export const authApi = {
   getMe: async (): Promise<User> => {
     const response = await fetch(`${API_CONFIG.BASE_URL}/auth/me`, {
       method: "GET",
-      headers: createHeaders(true),// Auth required
+      headers: createHeaders(true), // Auth required
     });
 
     if (!response.ok) {

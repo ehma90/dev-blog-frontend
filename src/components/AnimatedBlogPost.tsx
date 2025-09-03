@@ -1,50 +1,24 @@
 "use client";
 
-import { motion } from "framer-motion";
 import Link from "next/link";
-import { useParams } from "next/navigation";
-import { Button } from "../../../components";
-import { blogPosts } from "@/mock-data/blog-post";
+import Button from "./Button";
+import AnimationWrapper from "./AnimationWrapper";
+import type { BlogPost } from "@/model/types";
 
-// Mock data for blog posts
+interface AnimatedBlogPostProps {
+  post: BlogPost;
+}
 
-export default function BlogPost() {
-  const params = useParams();
-  const postId = params.id as string;
-  const post = blogPosts[postId as keyof typeof blogPosts];
-
-  if (!post) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <motion.div
-          initial={{ opacity: 0, scale: 0.9 }}
-          animate={{ opacity: 1, scale: 1 }}
-          className="text-center"
-        >
-          <h1 className="text-4xl font-bold text-[#22223b] mb-4">
-            Post Not Found
-          </h1>
-          <p className="text-[#4a4e69] mb-6">
-            The blog post you&apos;re looking for doesn&apos;t exist.
-          </p>
-          <Link href="/">
-            <Button>Back to Home</Button>
-          </Link>
-        </motion.div>
-      </div>
-    );
-  }
-
+export default function AnimatedBlogPost({ post }: AnimatedBlogPostProps) {
   return (
     <div className="min-h-screen !mx-auto !py-8">
       <div className="max-w-4xl mx-auto !px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between">
           {/* Back Button */}
-          <motion.div
+          <AnimationWrapper
             initial={{ opacity: 0, x: -20 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
-           
           >
             <Link href="/">
               <Button variant="outline" className="flex items-center">
@@ -64,23 +38,23 @@ export default function BlogPost() {
                 Back
               </Button>
             </Link>
-          </motion.div>
+          </AnimationWrapper>
 
           {/* Edit Button (for demo purposes) */}
-          <motion.div
+          <AnimationWrapper
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className=" text-center"
+            className="text-center"
           >
-            <Link href={`/posts/edit/${post.id}`}>
+            <Link href={`/posts/edit/${post._id}`}>
               <Button variant="outline">Edit Post</Button>
             </Link>
-          </motion.div>
+          </AnimationWrapper>
         </div>
 
         {/* Article Header */}
-        <motion.header
+        <AnimationWrapper
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
@@ -103,22 +77,20 @@ export default function BlogPost() {
 
           <div className="flex items-center justify-between gap-4 text-[#4a4e69] mb-6">
             <div className="flex items-center gap-x-4">
-              <span>By {post.author}</span>
-              <span>•</span>
-              <span>{post.readTime}</span>
+              <span>By {post.authorName}</span>
             </div>
             <div className="text-sm">
-              {new Date(post.date).toLocaleDateString("en-US", {
+              {new Date(post.createdAt).toLocaleDateString("en-GB", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
               })}
             </div>
           </div>
-        </motion.header>
+        </AnimationWrapper>
 
         {/* Article Content */}
-        <motion.article
+        <AnimationWrapper
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
@@ -126,13 +98,13 @@ export default function BlogPost() {
         >
           <div
             className="bg-white rounded-lg shadow-md !p-8"
-            dangerouslySetInnerHTML={{ __html: post.content }}
+            dangerouslySetInnerHTML={{ __html: post.content || "" }}
             style={{
               color: "#22223b",
               lineHeight: "1.7",
             }}
           />
-        </motion.article>
+        </AnimationWrapper>
       </div>
     </div>
   );

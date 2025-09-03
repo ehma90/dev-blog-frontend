@@ -37,7 +37,7 @@ const CallToAction = () => {
           initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.2, delay: 0.3, ease: "easeOut" }}
-          className="flex flex-col sm:flex-row gap-4 justify-center"
+          className="flex flex-col sm:flex-row gap-4 items-center justify-center"
         >
           <Link href={user ? "/create-post" : "/register"}>
             <Button size="lg">✍️ Create Your First Post</Button>

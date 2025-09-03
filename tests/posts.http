@@ -16,32 +16,32 @@ Content-Type: {{contentType}}
 
 ###
 
-### Create a new post (requires token)
-POST {{baseUrl}}/api/posts
-Authorization: Bearer {{token}}
+### Create a new post (requires authentication)
+POST {{baseUrl}}/posts
 Content-Type: {{contentType}}
+Authorization: {{token}}
 
 {
   "title": "My First Blog Post",
-  "excerpt": "This is a brief description of my first blog post",
-  "content": "<h1>Welcome to My Blog</h1><p>This is the content of my first blog post. It contains HTML formatting.</p><ul><li>First point</li><li>Second point</li></ul>",
-  "author": "John Doe",
-  "tags": "react, javascript, tutorial"
+  "authorName": "John Doe",
+  "excerpt": "A comprehensive guide to getting started with web development and programming.",
+  "tags": ["web-development", "programming", "tutorial"],
+  "content": "This is the content of my first blog post. It contains some interesting information about web development and programming."
 }
 
 ###
 
-### Update a post (requires token)
-PUT {{baseUrl}}/api/posts/1
-Authorization: Bearer {{token}}
+### Update a post (requires authentication - author only)
+PATCH {{baseUrl}}/posts/68b72431473c194c28290262
 Content-Type: {{contentType}}
+Authorization: {{token}}
 
 {
   "title": "Updated Blog Post Title",
-  "excerpt": "Updated excerpt for the blog post",
-  "content": "<h1>Updated Content</h1><p>This is the updated content of the blog post.</p>",
-  "author": "John Doe",
-  "tags": "react, javascript, tutorial, updated"
+  "authorName": "John Doe",
+  "excerpt": "Updated excerpt for the blog post.",
+  "tags": ["updated", "web-development", "programming"],
+  "content": "This is the updated content of the blog post."
 }
 
 ###

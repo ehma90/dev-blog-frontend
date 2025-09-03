@@ -2,15 +2,18 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { useState, useEffect } from "react";
 import { Button } from "../../../../components";
 import Input from "../../../../components/Input";
-import { blogPosts } from "@/mock-data/blog-post";
-import { usePost, useUpdatePost } from "@/hooks/usePosts";
+import { postsApi, type BlogPost, type UpdatePostData } from "@/lib/api";
+import { showToast } from "@/utils/toast";
+import { useUser } from "@/hooks/useAuth";
 
 export default function EditPost() {
   const params = useParams();
+  const router = useRouter();
+  const { data: user } = useUser();
   const postId = params.id as string;
   const [formData, setFormData] = useState({
     title: "",
@@ -19,23 +22,46 @@ export default function EditPost() {
     tags: "",
     author: "",
   });
+  const [post, setPost] = useState<BlogPost | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [isUpdating, setIsUpdating] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  // Example of using React Query hooks (commented out for now since we're using mock data)
-  // const { data: post, isLoading, error } = usePost(postId);
-  // const updatePost = useUpdatePost();
-
+  // Fetch post data
   useEffect(() => {
-    const post = blogPosts[postId as keyof typeof blogPosts];
-    if (post) {
-      setFormData({
-        title: post.title,
-        excerpt: post.excerpt,
-        content: post.content,
-        tags: post.tags.join(", "),
-        author: post.author,
-      });
+    const fetchPost = async () => {
+      try {
+        setIsLoading(true);
+        const postData = await postsApi.getById(postId);
+        setPost(postData);
+        setFormData({
+          title: postData.title,
+          excerpt: postData.excerpt,
+          content: postData.content || "",
+          tags: postData.tags.join(", "),
+          author: postData.authorName,
+        });
+      } catch (err) {
+        const errorMessage =
+          err instanceof Error ? err.message : "Failed to fetch post";
+        setError(errorMessage);
+        showToast.error(errorMessage);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (postId) {
+      fetchPost();
     }
   }, [postId]);
+
+  // Redirect if not authenticated
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    }
+  }, [user, router]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
@@ -46,25 +72,64 @@ export default function EditPost() {
     });
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle post update logic here
-    console.log("Updating post:", formData);
+    setIsUpdating(true);
+    setError(null);
 
-    // Example of using React Query mutation (commented out for now since we're using mock data)
-    // updatePost.mutate({
-    //   id: postId,
-    //   ...formData,
-    //   tags: formData.tags.split(',').map(tag => tag.trim())
-    // });
+    try {
+      // Transform form data to match API structure
+      const updateData: UpdatePostData = {
+        _id: postId,
+        title: formData.title,
+        excerpt: formData.excerpt,
+        content: formData.content,
+        authorName: formData.author,
+        tags: formData.tags
+          .split(",")
+          .map((tag) => tag.trim())
+          .filter((tag) => tag.length > 0),
+      };
 
-    // In a real app, you would send this to your backend
-    alert("Post updated successfully! (This is a demo)");
+      const updatedPost = await postsApi.update(updateData);
+
+      showToast.success("Post updated successfully!");
+
+      // Redirect to the updated post
+      router.push(`/posts/${updatedPost._id}`);
+    } catch (err) {
+      const errorMessage =
+        err instanceof Error ? err.message : "Failed to update post";
+      setError(errorMessage);
+      showToast.error(errorMessage);
+    } finally {
+      setIsUpdating(false);
+    }
   };
 
-  const post = blogPosts[postId as keyof typeof blogPosts];
+  // Loading state
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="flex flex-col items-center justify-center gap-3"
+        >
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-[#22223b] mx-auto mb-4"></div>
+          <h1 className="text-2xl font-bold text-[#22223b] mb-2">
+            Loading Post...
+          </h1>
+          <p className="text-[#4a4e69]">
+            Please wait while we fetch the post data.
+          </p>
+        </motion.div>
+      </div>
+    );
+  }
 
-  if (!post) {
+  // Error state
+  if (error || !post) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <motion.div
@@ -73,10 +138,10 @@ export default function EditPost() {
           className="text-center"
         >
           <h1 className="text-4xl font-bold text-[#22223b] mb-4">
-            Post Not Found
+            {error ? "Error Loading Post" : "Post Not Found"}
           </h1>
           <p className="text-[#4a4e69] mb-6">
-            The blog post your&apos;e trying to edit doesn&apos;t exist.
+            {error || "The blog post you're trying to edit doesn't exist."}
           </p>
           <Link href="/">
             <Button>Back to Home</Button>
@@ -96,7 +161,7 @@ export default function EditPost() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <Link href="/">
+            <Link href={`/posts/${postId}`}>
               <Button variant="outline" className="flex items-center">
                 <svg
                   className="w-5 h-5 mr-2"
@@ -129,6 +194,18 @@ export default function EditPost() {
           </motion.div>
         </div>
 
+        {/* Error Display */}
+        {error && (
+          <motion.div
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg mb-6"
+          >
+            <p className="font-medium">Error updating post:</p>
+            <p className="text-sm">{error}</p>
+          </motion.div>
+        )}
+
         {/* Article Header */}
         <motion.header
           initial={{ opacity: 0, y: 20 }}
@@ -153,12 +230,10 @@ export default function EditPost() {
 
           <div className="flex items-center justify-between gap-4 text-[#4a4e69] mb-6">
             <div className="flex items-center gap-x-4">
-              <span>By {post.author}</span>
-              <span>•</span>
-              <span>{post.readTime}</span>
+              <span>By {post.authorName}</span>
             </div>
             <div className="text-sm">
-              {new Date(post.date).toLocaleDateString("en-US", {
+              {new Date(post.createdAt).toLocaleDateString("en-GB", {
                 year: "numeric",
                 month: "long",
                 day: "numeric",
@@ -186,6 +261,7 @@ export default function EditPost() {
               onChange={handleChange}
               placeholder="Enter a compelling title for your post"
               className="text-lg"
+              disabled={isUpdating}
             />
 
             <Input
@@ -197,6 +273,7 @@ export default function EditPost() {
               value={formData.author}
               onChange={handleChange}
               placeholder="Your name"
+              disabled={isUpdating}
             />
 
             <div>
@@ -217,6 +294,7 @@ export default function EditPost() {
                 onChange={handleChange}
                 className="form-input w-full resize-none"
                 placeholder="Write a brief description of your post (this will appear on the homepage)"
+                disabled={isUpdating}
               />
             </div>
 
@@ -228,6 +306,7 @@ export default function EditPost() {
               value={formData.tags}
               onChange={handleChange}
               placeholder="Enter tags separated by commas (e.g., React, JavaScript, Tutorial)"
+              disabled={isUpdating}
             />
 
             <div>
@@ -248,6 +327,7 @@ export default function EditPost() {
                 onChange={handleChange}
                 className="form-input w-full resize-none"
                 placeholder="Write your post content here. You can use HTML tags for formatting."
+                disabled={isUpdating}
               />
               <p className="text-sm text-[#4a4e69] mt-2">
                 You can use HTML tags for formatting (e.g., &lt;h2&gt;,
@@ -263,14 +343,65 @@ export default function EditPost() {
             transition={{ duration: 0.6, delay: 0.4 }}
             className="flex flex-col sm:flex-row gap-4 !mt-8"
           >
-            <Button type="submit" size="lg" className="flex-1">
-              Update Post
+            <Button
+              type="submit"
+              size="lg"
+              className="flex-1"
+              disabled={isUpdating}
+            >
+              {isUpdating ? (
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Updating Post...
+                </div>
+              ) : (
+                "Update Post"
+              )}
             </Button>
 
             <Button
               type="button"
               size="lg"
               className="flex-1 bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700"
+              disabled={isUpdating}
+              onClick={async () => {
+                if (
+                  confirm(
+                    "Are you sure you want to delete this post? This action cannot be undone."
+                  )
+                ) {
+                  try {
+                    await postsApi.delete(postId);
+                    showToast.success("Post deleted successfully!");
+                    router.push("/");
+                  } catch (err) {
+                    const errorMessage =
+                      err instanceof Error
+                        ? err.message
+                        : "Failed to delete post";
+                    showToast.error(errorMessage);
+                  }
+                }
+              }}
             >
               Delete Post
             </Button>

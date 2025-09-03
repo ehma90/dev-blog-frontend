@@ -9,11 +9,8 @@ import { showToast } from "../../../utils/toast";
 import { useLogin } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
-interface LoginFormProps {
-  onSubmit: (formData: { email: string; password: string }) => void;
-}
 
-const LoginForm = ({ onSubmit }: LoginFormProps) => {
+const LoginForm = () => {
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -58,8 +55,6 @@ const LoginForm = ({ onSubmit }: LoginFormProps) => {
           showToast.success(
             "Welcome back! You've been signed in successfully."
           );
-          // Call the original onSubmit callback
-          onSubmit(formData);
           // Redirect to home page
           router.push("/");
         },
