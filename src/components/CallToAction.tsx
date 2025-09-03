@@ -42,15 +42,12 @@ const CallToAction = () => {
           <Link href={user ? "/create-post" : "/register"}>
             <Button size="lg">✍️ Create Your First Post</Button>
           </Link>
-          {user ? (
-            <div />
-          ) : (
-            <Link href={"/register"}>
-              <Button variant="outline" size="lg">
-                🚀 Join Community
-              </Button>
-            </Link>
-          )}
+
+          <Link href={ user ? "/#" : "/register"}>
+            <Button variant="outline" size="lg">
+              🚀 Join Community
+            </Button>
+          </Link>
         </motion.div>
       </div>
     </motion.div>

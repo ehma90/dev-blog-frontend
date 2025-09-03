@@ -79,28 +79,7 @@ const Navigation = () => {
             </Link>
           </motion.div>
 
-          {/* Navigation Items */}
-          <div className="items-center gap-x-4 hidden md:flex">
-            {(user ? authenticatedNavItems : unauthenticatedNavItems).map(
-              (item, index) => (
-                <motion.div
-                  key={item.href}
-                  initial={{ opacity: 0, y: -20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{
-                    delay: index * 0.05,
-                    duration: 0.2,
-                    ease: "easeOut",
-                  }}
-                  className="w-full text-[#f2e9e4] hover:text-white p-2 text-sm font-semibold  whitespace-nowrap hover:border-b-2 hover:border-white/20"
-                >
-                  <Link href={item.href}>
-                    <span>{item.label}</span>
-                  </Link>
-                </motion.div>
-              )
-            )}
-          </div>
+         
 
           <div className="hidden md:block">
             <div className="ml-10 flex items-center gap-x-4">
@@ -143,7 +122,28 @@ const Navigation = () => {
                     {logoutMutation.isPending ? "Logging out..." : "Logout"}
                   </motion.button>
                 </motion.div>
-              ) : <div/>}
+              ) :  
+              <div className="items-center gap-x-4 hidden md:flex">
+                {(user ? authenticatedNavItems : unauthenticatedNavItems).map(
+                  (item, index) => (
+                    <motion.div
+                      key={item.href}
+                      initial={{ opacity: 0, y: -20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{
+                        delay: index * 0.05,
+                        duration: 0.2,
+                        ease: "easeOut",
+                      }}
+                      className="w-full text-[#f2e9e4] hover:text-white p-2 text-sm font-semibold  whitespace-nowrap hover:border-b-2 hover:border-white/20"
+                    >
+                      <Link href={item.href}>
+                        <span>{item.label}</span>
+                      </Link>
+                    </motion.div>
+                  )
+                )}
+              </div>}
             </div>
           </div>
 
