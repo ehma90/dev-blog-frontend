@@ -28,6 +28,8 @@ export default async function Home() {
   // Fetch posts on the server for SEO
   const posts = await getServerPosts();
 
+  console.log(posts);
+
   return (
     <div className="flex-1 my-12 flex justify-center items-center">
       <div className="max-w-7xl mx-auto !px-4 sm:px-6 lg:px-8">

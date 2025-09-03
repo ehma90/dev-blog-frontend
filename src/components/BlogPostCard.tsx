@@ -15,7 +15,7 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
         ease: "easeOut",
       }}
       whileHover={{ y: -4, scale: 1.02 }}
-      className="card cursor-pointer"
+      className="card cursor-pointer shrink-0 w-full max-w-sm"
     >
       <div className="flex flex-col justify-between h-full gap-6">
         <div className="flex flex-col gap-y-3 h-full">
@@ -42,29 +42,27 @@ const BlogPostCard = ({ post }: BlogPostCardProps) => {
             <div className="flex items-center gap-x-2">
               <div className="w-8 h-8 bg-gradient-to-br from-[#22223b] to-[#4a4e69] rounded-full flex items-center justify-center">
                 <span className="text-white text-xs font-bold">
-                  {post.author
-                    .split(" ")
+                  {post?.authorName
+                    ?.split(" ")
                     .map((n) => n[0])
                     .join("")}
                 </span>
               </div>
-              <span className="font-medium">by {post.author}</span>
+              <span className="font-medium">by {post.authorName}</span>
             </div>
             <span className="bg-[#f2e9e4] !px-2 !py-1 rounded-full text-xs font-medium">
-              {post.readTime}
+              {new Date(post.createdAt).toLocaleDateString("en-US", {
+                year: "numeric",
+                month: "short",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+              })}
             </span>
-          </div>
-
-          <div className="text-xs text-[#4a4e69] mb-6 font-medium">
-            {new Date(post.date).toLocaleDateString("en-US", {
-              year: "numeric",
-              month: "long",
-              day: "numeric",
-            })}
           </div>
         </div>
 
-        <Link href={`/posts/${post.id}`}>
+        <Link href={`/posts/${post._id}`}>
           <Button className="w-full">Read More →</Button>
         </Link>
       </div>

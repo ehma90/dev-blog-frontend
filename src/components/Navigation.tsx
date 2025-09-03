@@ -143,7 +143,7 @@ const Navigation = () => {
                     {logoutMutation.isPending ? "Logging out..." : "Logout"}
                   </motion.button>
                 </motion.div>
-              ) : null}
+              ) : <div/>}
             </div>
           </div>
 

@@ -2,11 +2,15 @@
 
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Button from "../../components/Button";
 import Input from "../../components/Input";
+import { useUser } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function CreatePost() {
+  const { data: user } = useUser();
+  const router = useRouter();
   const [formData, setFormData] = useState<{
     title: string;
     excerpt: string;
@@ -20,6 +24,14 @@ export default function CreatePost() {
     tags: "",
     author: "",
   });
+
+  useEffect(() => {
+    if (!user) {
+      router.push("/login");
+    } else {
+      return
+    }
+  }, [user]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

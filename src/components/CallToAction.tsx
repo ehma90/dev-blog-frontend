@@ -3,8 +3,10 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import Button from "./Button";
+import { useUser } from "@/hooks/useAuth";
 
 const CallToAction = () => {
+  const { data: user } = useUser();
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
@@ -37,14 +39,18 @@ const CallToAction = () => {
           transition={{ duration: 0.2, delay: 0.3, ease: "easeOut" }}
           className="flex flex-col sm:flex-row gap-4 justify-center"
         >
-          <Link href="/create-post">
+          <Link href={user ? "/create-post" : "/register"}>
             <Button size="lg">✍️ Create Your First Post</Button>
           </Link>
-          <Link href="/register">
-            <Button variant="outline" size="lg">
-              🚀 Join Community
-            </Button>
-          </Link>
+          {user ? (
+            <div />
+          ) : (
+            <Link href={"/register"}>
+              <Button variant="outline" size="lg">
+                🚀 Join Community
+              </Button>
+            </Link>
+          )}
         </motion.div>
       </div>
     </motion.div>

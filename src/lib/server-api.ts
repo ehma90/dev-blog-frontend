@@ -1,15 +1,10 @@
 import { BlogPost } from "@/model/types";
-
-// Server-side API configuration
-const SERVER_API_CONFIG = {
-  BASE_URL: process.env.NEXT_PUBLIC_API_URL || "http://localhost:4000",
-  TIMEOUT: 10000,
-} as const;
+import { API_CONFIG } from "@/config/api";
 
 // Server-side fetch function for posts
 export async function getServerPosts(): Promise<BlogPost[]> {
   try {
-    const response = await fetch(`${SERVER_API_CONFIG.BASE_URL}/posts`, {
+    const response = await fetch(`${API_CONFIG.BASE_URL}/posts`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -31,13 +26,12 @@ export async function getServerPosts(): Promise<BlogPost[]> {
 
     // Transform the API response to match our BlogPost interface
     return posts.map((post: any) => ({
-      id: post.id,
+      _id: post._id,
       title: post.title,
       excerpt: post.excerpt,
       content: post.content,
-      author: post.author,
-      date: post.date,
-      readTime: post.readTime,
+      authorName: post.authorName,
+      createdAt: post.createdAt,
       tags: post.tags,
     }));
   } catch (error) {
@@ -46,23 +40,21 @@ export async function getServerPosts(): Promise<BlogPost[]> {
     // Return fallback data if API fails
     return [
       {
-        id: "1",
+        _id: "1",
         title: "Getting Started with Next.js 14",
         excerpt:
           "Learn the fundamentals of Next.js 14 and how to build modern web applications with the latest features.",
-        author: "John Doe",
-        date: "2024-01-15",
-        readTime: "5 min read",
+        authorName: "John Doe",
+        createdAt: "2024-01-15T10:30:00Z",
         tags: ["Next.js", "React", "Web Development"],
       },
       {
-        id: "2",
+        _id: "2",
         title: "Building Responsive UIs with Tailwind CSS",
         excerpt:
           "Discover how to create beautiful, responsive user interfaces using Tailwind CSS utility classes.",
-        author: "Mike Johnson",
-        date: "2024-01-10",
-        readTime: "6 min read",
+        authorName: "Mike Johnson",
+        createdAt: "2024-01-10T14:45:00Z",
         tags: ["CSS", "Tailwind", "Design"],
       },
     ];
@@ -72,7 +64,7 @@ export async function getServerPosts(): Promise<BlogPost[]> {
 // Server-side fetch function for a single post
 export async function getServerPost(id: string): Promise<BlogPost | null> {
   try {
-    const response = await fetch(`${SERVER_API_CONFIG.BASE_URL}/posts/${id}`, {
+    const response = await fetch(`${API_CONFIG.BASE_URL}/posts/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -95,13 +87,12 @@ export async function getServerPost(id: string): Promise<BlogPost | null> {
     const post = await response.json();
 
     return {
-      id: post.id,
+      _id: post._id,
       title: post.title,
       excerpt: post.excerpt,
       content: post.content,
-      author: post.author,
-      date: post.date,
-      readTime: post.readTime,
+      authorName: post.authorName,
+      createdAt: post.createdAt,
       tags: post.tags,
     };
   } catch (error) {

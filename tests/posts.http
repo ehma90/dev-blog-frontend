@@ -5,7 +5,7 @@
 @token = Bearer {{token}}
 
 ### Get all posts
-GET {{baseUrl}}/api/posts
+GET {{baseUrl}}/posts
 Content-Type: {{contentType}}
 
 ###
