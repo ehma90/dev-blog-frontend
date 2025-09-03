@@ -7,6 +7,11 @@ export interface BlogPost {
   excerpt: string;
   content: string;
   authorName: string;
+  authorId: {
+    _id: string;
+    fullName: string;
+    email: string;
+  };
   tags: string[];
   createdAt: string;
   readTime: string;
@@ -25,11 +30,9 @@ export interface UpdatePostData extends Partial<CreatePostData> {
 }
 
 export interface User {
-  _id: string;
+  id: string;
   fullName: string;
   email: string;
-  avatar?: string;
-  createdAt?: string;
 }
 
 export interface LoginData {
@@ -146,7 +149,7 @@ export const postsApi = {
   delete: async (_id: string): Promise<void> => {
     const response = await fetch(`${API_CONFIG.BASE_URL}/posts/${_id}`, {
       method: "DELETE",
-      headers: createHeaders(true), // Auth required
+      headers: createHeaders(true),
     });
 
     if (!response.ok) {
@@ -157,91 +160,6 @@ export const postsApi = {
   },
 };
 
-// Users API
-export const usersApi = {
-  // Get all users
-  getAll: async (): Promise<User[]> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/users`, {
-      method: "GET",
-      headers: createHeaders(true), // Auth required
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch users: ${response.status} ${response.statusText}`
-      );
-    }
-
-    return response.json();
-  },
-
-  // Get user by ID
-  getById: async (id: string): Promise<User> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/users/${id}`, {
-      method: "GET",
-      headers: createHeaders(true), // Auth required
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to fetch user: ${response.status} ${response.statusText}`
-      );
-    }
-
-    return response.json();
-  },
-
-  // Create new user
-  create: async (data: Omit<User, "_id" | "createdAt">): Promise<User> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/users`, {
-      method: "POST",
-      headers: createHeaders(true), // Auth required
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to create user: ${response.status} ${response.statusText}`
-      );
-    }
-
-    return response.json();
-  },
-
-  // Update user
-  update: async (
-    _id: string,
-    data: Partial<Omit<User, "_id" | "createdAt">>
-  ): Promise<User> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/users/${_id}`, {
-      method: "PUT",
-      headers: createHeaders(true), // Auth required
-      body: JSON.stringify(data),
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to update user: ${response.status} ${response.statusText}`
-      );
-    }
-
-    return response.json();
-  },
-
-  // Delete user
-  delete: async (_id: string): Promise<void> => {
-    const response = await fetch(`${API_CONFIG.BASE_URL}/users/${_id}`, {
-      method: "DELETE",
-      headers: createHeaders(true), // Auth required
-    });
-
-    if (!response.ok) {
-      throw new Error(
-        `Failed to delete user: ${response.status} ${response.statusText}`
-      );
-    }
-  },
-};
 
 // Auth API
 export const authApi = {

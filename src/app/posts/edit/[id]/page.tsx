@@ -9,12 +9,15 @@ import Input from "../../../../components/Input";
 import { postsApi, type BlogPost, type UpdatePostData } from "@/lib/api";
 import { showToast } from "@/utils/toast";
 import { useUser } from "@/hooks/useAuth";
+import { isPostAuthor } from "@/utils/auth";
+import { useDeletePost } from "@/hooks/usePosts";
 
 export default function EditPost() {
   const params = useParams();
   const router = useRouter();
   const { data: user } = useUser();
   const postId = params.id as string;
+  const deletePostMutation = useDeletePost();
   const [formData, setFormData] = useState({
     title: "",
     excerpt: "",
@@ -26,6 +29,7 @@ export default function EditPost() {
   const [isLoading, setIsLoading] = useState(true);
   const [isUpdating, setIsUpdating] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [canEdit, setCanEdit] = useState(false);
 
   // Fetch post data
   useEffect(() => {
@@ -41,6 +45,20 @@ export default function EditPost() {
           tags: postData.tags.join(", "),
           author: postData.authorName,
         });
+
+        // Check if current user can edit this post
+        const hasEditPermission = isPostAuthor(
+          user || null,
+          postData.authorId._id
+        );
+        setCanEdit(hasEditPermission);
+
+        // If user doesn't have permission, redirect them
+        if (!hasEditPermission) {
+          showToast.error("You don't have permission to edit this post");
+          router.push(`/posts/${postId}`);
+          return;
+        }
       } catch (err) {
         const errorMessage =
           err instanceof Error ? err.message : "Failed to fetch post";
@@ -51,10 +69,10 @@ export default function EditPost() {
       }
     };
 
-    if (postId) {
+    if (postId && user) {
       fetchPost();
     }
-  }, [postId]);
+  }, [postId, user, router]);
 
   // Redirect if not authenticated
   useEffect(() => {
@@ -123,6 +141,35 @@ export default function EditPost() {
           <p className="text-[#4a4e69]">
             Please wait while we fetch the post data.
           </p>
+        </motion.div>
+      </div>
+    );
+  }
+
+  // Permission denied state
+  if (!canEdit && post) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <motion.div
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          className="text-center"
+        >
+          <h1 className="text-4xl font-bold text-[#22223b] mb-4">
+            Access Denied
+          </h1>
+          <p className="text-[#4a4e69] mb-6">
+            You don't have permission to edit this post. Only the author can
+            edit their posts.
+          </p>
+          <div className="flex gap-4 justify-center">
+            <Link href={`/posts/${postId}`}>
+              <Button variant="outline">View Post</Button>
+            </Link>
+            <Link href="/">
+              <Button>Back to Home</Button>
+            </Link>
+          </div>
         </motion.div>
       </div>
     );
@@ -381,29 +428,58 @@ export default function EditPost() {
             <Button
               type="button"
               size="lg"
-              className="flex-1 bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700"
-              disabled={isUpdating}
-              onClick={async () => {
+              variant="danger"
+              className="flex-1"
+              disabled={isUpdating || deletePostMutation.isPending}
+              onClick={() => {
                 if (
                   confirm(
                     "Are you sure you want to delete this post? This action cannot be undone."
                   )
                 ) {
-                  try {
-                    await postsApi.delete(postId);
-                    showToast.success("Post deleted successfully!");
-                    router.push("/");
-                  } catch (err) {
-                    const errorMessage =
-                      err instanceof Error
-                        ? err.message
-                        : "Failed to delete post";
-                    showToast.error(errorMessage);
-                  }
+                  deletePostMutation.mutate(postId, {
+                    onSuccess: () => {
+                      showToast.success("Post deleted successfully!");
+                      router.push("/");
+                    },
+                    onError: (error) => {
+                      const errorMessage =
+                        error instanceof Error
+                          ? error.message
+                          : "Failed to delete post";
+                      showToast.error(errorMessage);
+                    },
+                  });
                 }
               }}
             >
-              Delete Post
+              {deletePostMutation.isPending ? (
+                <div className="flex items-center justify-center">
+                  <svg
+                    className="animate-spin -ml-1 mr-3 h-5 w-5 text-white"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"
+                    ></path>
+                  </svg>
+                  Deleting...
+                </div>
+              ) : (
+                "Delete Post"
+              )}
             </Button>
           </motion.div>
         </motion.form>

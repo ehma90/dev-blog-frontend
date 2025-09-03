@@ -6,17 +6,20 @@ import {
   RegisterHeader,
   RegisterForm,
 } from "../../components/page-components/loginpage";
+import { useEffect } from "react";
+import { useUser } from "@/hooks/useAuth";
+import { useRouter } from "next/navigation";
 
 export default function Register() {
-  const handleRegister = (formData: {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => {
-    // Handle registration logic here
-    console.log("Registration attempt:", formData);
-  };
+  const { data: user } = useUser();
+  const router = useRouter();
+
+  useEffect(() => {
+    if (user) {
+      router.push("/");
+    }
+  }, [user]);
+
 
   return (
     <div className="min-h-screen flex lg:items-center justify-center py-12 !px-4 sm:px-6 lg:px-8 relative">
@@ -31,7 +34,7 @@ export default function Register() {
           subtitle="Create your account and start your writing journey"
         />
 
-        <RegisterForm onSubmit={handleRegister} />
+        <RegisterForm />
 
         <motion.div
           initial={{ opacity: 0 }}

@@ -31,6 +31,7 @@ export async function getServerPosts(): Promise<BlogPost[]> {
       excerpt: post.excerpt,
       content: post.content,
       authorName: post.authorName,
+      authorId: post.authorId,
       createdAt: post.createdAt,
       tags: post.tags,
     }));
@@ -45,6 +46,11 @@ export async function getServerPosts(): Promise<BlogPost[]> {
         excerpt:
           "Learn the fundamentals of Next.js 14 and how to build modern web applications with the latest features.",
         authorName: "John Doe",
+        authorId: {
+          _id: "123",
+          fullName: "John Doe",
+          email: "john@example.com",
+        },
         createdAt: "2024-01-15T10:30:00Z",
         tags: ["Next.js", "React", "Web Development"],
       },
@@ -54,6 +60,11 @@ export async function getServerPosts(): Promise<BlogPost[]> {
         excerpt:
           "Discover how to create beautiful, responsive user interfaces using Tailwind CSS utility classes.",
         authorName: "Mike Johnson",
+        authorId: {
+          _id: "456",
+          fullName: "Mike Johnson",
+          email: "mike@example.com",
+        },
         createdAt: "2024-01-10T14:45:00Z",
         tags: ["CSS", "Tailwind", "Design"],
       },
@@ -92,6 +103,7 @@ export async function getServerPost(id: string): Promise<BlogPost | null> {
       excerpt: post.excerpt,
       content: post.content,
       authorName: post.authorName,
+      authorId: post.authorId,
       createdAt: post.createdAt,
       tags: post.tags,
     };

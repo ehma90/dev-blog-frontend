@@ -1,5 +1,4 @@
-import { HeroSection, BlogPostsGrid, CallToAction } from "../components";
-import { getServerPosts } from "../lib/server-api";
+import { HeroSection, ClientBlogPostsGrid, CallToAction } from "../components";
 import { Metadata } from "next";
 
 // Generate metadata for SEO
@@ -24,17 +23,12 @@ export const metadata: Metadata = {
   },
 };
 
-export default async function Home() {
-  // Fetch posts on the server for SEO
-  const posts = await getServerPosts();
-
-  console.log(posts);
-
+export default function Home() {
   return (
     <div className="flex-1 my-12 flex justify-center items-center">
       <div className="max-w-7xl mx-auto !px-4 sm:px-6 lg:px-8">
         <HeroSection />
-        <BlogPostsGrid posts={posts} />
+        <ClientBlogPostsGrid />
         <CallToAction />
       </div>
     </div>

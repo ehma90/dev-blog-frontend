@@ -9,16 +9,8 @@ import { showToast } from "../../../utils/toast";
 import { useRegister } from "@/hooks/useAuth";
 import { useRouter } from "next/navigation";
 
-interface RegisterFormProps {
-  onSubmit: (formData: {
-    name: string;
-    email: string;
-    password: string;
-    confirmPassword: string;
-  }) => void;
-}
 
-const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
+const RegisterForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -82,8 +74,6 @@ const RegisterForm = ({ onSubmit }: RegisterFormProps) => {
           showToast.success(
             "Account created successfully! Welcome to Dev Blog!"
           );
-          // Call the original onSubmit callback
-          onSubmit(formData);
           // Redirect to home page
           router.push("/");
         },

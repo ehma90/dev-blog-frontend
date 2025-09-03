@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 
 interface ButtonProps {
   children: ReactNode;
-  variant?: "default" | "outline";
+  variant?: "default" | "outline" | "danger";
   size?: "sm" | "md" | "lg";
   className?: string;
   onClick?: () => void;
@@ -34,6 +34,8 @@ const Button = ({
       "bg-gradient-to-r from-[#22223b] to-[#4a4e69] text-white hover:from-[#4a4e69] hover:to-[#22223b] focus:ring-[#4a4e69] shadow-lg hover:shadow-xl",
     outline:
       "bg-white text-[#22223b] border-2 border-[#4a4e69] hover:bg-[#4a4e69] hover:text-white focus:ring-[#4a4e69] hover:shadow-lg",
+    danger:
+      "bg-red-600 hover:bg-red-700 border-red-600 hover:border-red-700 text-white",
   };
 
   const sizeClasses = {

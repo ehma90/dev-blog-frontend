@@ -4,6 +4,11 @@ export interface BlogPost {
   excerpt: string;
   content?: string;
   authorName: string;
+  authorId: {
+    _id: string;
+    fullName: string;
+    email: string;
+  };
   date?: string;
   createdAt: string;
   tags: string[];
