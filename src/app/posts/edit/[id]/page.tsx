@@ -159,7 +159,7 @@ export default function EditPost() {
             Access Denied
           </h1>
           <p className="text-[#4a4e69] mb-6">
-            You don't have permission to edit this post. Only the author can
+            You don&apos;t have permission to edit this post. Only the author can
             edit their posts.
           </p>
           <div className="flex gap-4 justify-center">

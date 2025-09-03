@@ -5,15 +5,16 @@ import AnimatedBlogPost from "@/components/AnimatedBlogPost";
 import type { BlogPost } from "@/model/types";
 
 interface BlogPostPageProps {
-  params: {
+  params: Promise<{
     id: string;
-  };
+  }>;
 }
 
 export async function generateMetadata({
   params,
 }: BlogPostPageProps): Promise<Metadata> {
-  const post = await getServerPost(params.id);
+  const { id } = await params;
+  const post = await getServerPost(id);
 
   if (!post) {
     return {
@@ -36,7 +37,7 @@ export async function generateMetadata({
 }
 
 export default async function BlogPost({ params }: BlogPostPageProps) {
-  const postId = params.id;
+  const { id: postId } = await params;
   const post: BlogPost | null = await getServerPost(postId);
 
   if (!post) {

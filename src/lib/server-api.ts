@@ -25,6 +25,7 @@ export async function getServerPosts(): Promise<BlogPost[]> {
     const posts = await response.json();
 
     // Transform the API response to match our BlogPost interface
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     return posts.map((post: any) => ({
       _id: post._id,
       title: post.title,

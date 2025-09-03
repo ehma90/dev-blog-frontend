@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
-import { postsApi, CreatePostData, UpdatePostData } from "@/lib/api";
+import { postsApi } from "@/lib/api";
 import { queryKeys } from "@/lib/query-client";
 
 // Get all posts
@@ -43,7 +43,7 @@ export const useUpdatePost = () => {
     mutationFn: postsApi.update,
     onSuccess: (data) => {
       // Update the specific post in cache
-      queryClient.setQueryData(queryKeys.posts.detail(data.id), data);
+      queryClient.setQueryData(queryKeys.posts.detail(data._id), data);
       // Invalidate posts list to ensure consistency
       queryClient.invalidateQueries({ queryKey: queryKeys.posts.lists() });
     },

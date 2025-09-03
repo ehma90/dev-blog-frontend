@@ -18,7 +18,7 @@ export default function Login() {
     if (user) {
       router.push("/");
     }
-  }, [user]);
+  }, [user, router]);
 
 
   return (

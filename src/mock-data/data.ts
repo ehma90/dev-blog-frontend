@@ -1,25 +1,34 @@
 import { BlogPost } from "../model/types";
 
-
 export const blogPosts: BlogPost[] = [
   {
-    id: "1",
+    _id: "1",
     title: "Getting Started with Next.js 14",
     excerpt:
       "Learn the fundamentals of Next.js 14 and how to build modern web applications with the latest features.",
-    author: "John Doe",
-    date: "2024-01-15",
-    readTime: "5 min read",
+    content: "This is a comprehensive guide to Next.js 14...",
+    authorName: "John Doe",
+    authorId: {
+      _id: "123",
+      fullName: "John Doe",
+      email: "john@example.com",
+    },
+    createdAt: "2024-01-15T10:30:00Z",
     tags: ["Next.js", "React", "Web Development"],
   },
   {
-    id: "3",
+    _id: "3",
     title: "Building Responsive UIs with Tailwind CSS",
     excerpt:
       "Discover how to create beautiful, responsive user interfaces using Tailwind CSS utility classes.",
-    author: "Mike Johnson",
-    date: "2024-01-10",
-    readTime: "6 min read",
+    content: "Tailwind CSS is a utility-first CSS framework...",
+    authorName: "Mike Johnson",
+    authorId: {
+      _id: "456",
+      fullName: "Mike Johnson",
+      email: "mike@example.com",
+    },
+    createdAt: "2024-01-10T14:45:00Z",
     tags: ["CSS", "Tailwind", "Design"],
   },
 ];

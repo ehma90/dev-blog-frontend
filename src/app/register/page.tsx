@@ -18,7 +18,7 @@ export default function Register() {
     if (user) {
       router.push("/");
     }
-  }, [user]);
+  }, [user, router]);
 
 
   return (

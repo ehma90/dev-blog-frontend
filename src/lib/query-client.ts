@@ -9,6 +9,7 @@ export const queryClient = new QueryClient({
       // Time in milliseconds that unused/inactive cache data remains in memory
       gcTime: 10 * 60 * 1000, // 10 minutes (formerly cacheTime)
       // Retry failed requests
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       retry: (failureCount, error: any) => {
         // Don't retry on 4xx errors (client errors)
         if (error?.response?.status >= 400 && error?.response?.status < 500) {
@@ -24,6 +25,7 @@ export const queryClient = new QueryClient({
     },
     mutations: {
       // Retry failed mutations
+      /* eslint-disable @typescript-eslint/no-explicit-any */
       retry: (failureCount, error: any) => {
         // Don't retry on 4xx errors (client errors)
         if (error?.response?.status >= 400 && error?.response?.status < 500) {
@@ -42,6 +44,7 @@ export const queryKeys = {
   posts: {
     all: ["posts"] as const,
     lists: () => [...queryKeys.posts.all, "list"] as const,
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     list: (filters: Record<string, any>) =>
       [...queryKeys.posts.lists(), { filters }] as const,
     details: () => [...queryKeys.posts.all, "detail"] as const,
@@ -51,6 +54,7 @@ export const queryKeys = {
   users: {
     all: ["users"] as const,
     lists: () => [...queryKeys.users.all, "list"] as const,
+    /* eslint-disable @typescript-eslint/no-explicit-any */
     list: (filters: Record<string, any>) =>
       [...queryKeys.users.lists(), { filters }] as const,
     details: () => [...queryKeys.users.all, "detail"] as const,

@@ -77,6 +77,7 @@ const RegisterForm = () => {
           // Redirect to home page
           router.push("/");
         },
+        /* eslint-disable @typescript-eslint/no-explicit-any */
         onError: (error: any) => {
           showToast.dismiss(loadingToast);
           const errorMessage =

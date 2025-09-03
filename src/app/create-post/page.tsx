@@ -35,7 +35,7 @@ export default function CreatePost() {
     } else {
       return;
     }
-  }, [user]);
+  }, [user, router]);
 
   const handleChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>

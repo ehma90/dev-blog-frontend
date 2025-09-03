@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { ReactNode } from "react";
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 interface AnimationWrapperProps {
   children: ReactNode;
   className?: string;
