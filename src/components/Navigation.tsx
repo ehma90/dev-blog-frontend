@@ -52,7 +52,7 @@ const Navigation = () => {
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.3, ease: "easeOut" }}
-      className="bg-gradient-to-r from-[#22223b] to-[#4a4e69] shadow-2xl sticky top-0 z-50 backdrop-blur-md w-full flex justify-center"
+      className="bg-gradient-to-r from-[#22223b] to-[#4a4e69] shadow-2xl backdrop-blur-md w-full flex justify-center"
       style={{
         background:
           "linear-gradient(135deg, #22223b 0%, #4a4e69 50%, #22223b 100%)",

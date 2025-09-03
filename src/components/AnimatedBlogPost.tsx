@@ -17,8 +17,8 @@ export default function AnimatedBlogPost({ post }: AnimatedBlogPostProps) {
 
 
   return (
-    <div className="min-h-screen !mx-auto !py-8">
-      <div className="!max-w-4xl !w-full mx-auto !px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen w-full !py-8">
+      <div className="!max-w-4xl w-full !mx-auto !px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between">
           {/* Back Button */}
           <AnimationWrapper
@@ -70,7 +70,7 @@ export default function AnimatedBlogPost({ post }: AnimatedBlogPostProps) {
         >
           
 
-          <h1 className="text-3xl md:text-4xl font-bold text-[#22223b] mb-4">
+          <h1 className="text-3xl md:text-4xl text-center font-bold text-[#22223b] mb-4">
             {post.title}
           </h1>
 
@@ -86,7 +86,7 @@ export default function AnimatedBlogPost({ post }: AnimatedBlogPostProps) {
               })}
             </div>
           </div>
-          <div className="flex flex-wrap gap-2 mb-4">
+          <div className="flex flex-wrap justify-center gap-2 mb-4">
             {post.tags.map((tag) => (
               <span
                 key={tag}
@@ -106,7 +106,7 @@ export default function AnimatedBlogPost({ post }: AnimatedBlogPostProps) {
           className="prose prose-lg max-w-none"
         >
           <div
-            className="bg-white rounded-lg shadow-md !p-8"
+            className="bg-white rounded-lg shadow-md !p-4 !lg:p-8"
             dangerouslySetInnerHTML={{ __html: post.content || "" }}
             style={{
               color: "#22223b",
